@@ -1,0 +1,95 @@
+{
+  "$schema": "Master list of dolls. Single source of truth. Update this, then sync HTML manually (or via future build step).",
+  "currency": "EUR",
+  "dolls": [
+    {
+      "id": "liora",
+      "name": "Liora",
+      "slug": "liora-sleeping-newborn",
+      "type": "newborn",
+      "state": "sleeping",
+      "sizeIn": 19,
+      "weightLb": 4.2,
+      "price": 1480,
+      "status": "available",
+      "tag": "new",
+      "tone": "warm",
+      "shortDescription": "Sleeping newborn, weighted to feel newly arrived.",
+      "story": "Liora was painted across nine evenings in early spring, layer by layer, between long pauses to let her settle. Her cheeks hold the faintest blush of waking, though she has not woken yet.",
+      "specs": {
+        "kit": "Limited-edition vinyl, signed and numbered",
+        "paint": "Genesis heat-set, 28 layers",
+        "hair": "European mohair, micro-rooted by hand",
+        "eyes": "German glass, closed",
+        "body": "Soft cotton cloth, weighted with glass beads",
+        "shipping": "Insured worldwide, linen-lined cradle box"
+      },
+      "images": [
+        "assets/img/products/liora-1.webp",
+        "assets/img/products/liora-2.webp",
+        "assets/img/products/liora-3.webp"
+      ]
+    },
+    {
+      "id": "theo",
+      "name": "Theo",
+      "slug": "theo-awake-toddler",
+      "type": "toddler",
+      "state": "awake",
+      "sizeIn": 21,
+      "weightLb": 5.6,
+      "price": 1690,
+      "status": "available",
+      "tone": "blue",
+      "shortDescription": "Awake toddler with painted hair and curious eyes.",
+      "story": "",
+      "specs": {
+        "kit": "",
+        "paint": "Genesis heat-set",
+        "hair": "Painted, layered",
+        "eyes": "German glass, open hazel",
+        "body": "Soft cotton, weighted",
+        "shipping": "Insured worldwide"
+      },
+      "images": []
+    },
+    {
+      "id": "margot",
+      "name": "Margot",
+      "slug": "margot-drowsy-newborn",
+      "type": "newborn",
+      "state": "drowsy",
+      "sizeIn": 18,
+      "weightLb": 3.8,
+      "price": 1540,
+      "status": "reserved",
+      "tag": "reserved",
+      "tone": "cream",
+      "shortDescription": "Drowsy newborn with mohair and milky-soft skin.",
+      "story": "",
+      "specs": {},
+      "images": []
+    },
+    {
+      "id": "soren",
+      "name": "Soren",
+      "slug": "soren-awake-newborn",
+      "type": "newborn",
+      "state": "awake",
+      "sizeIn": 20,
+      "weightLb": 4.6,
+      "price": 1620,
+      "status": "available",
+      "tone": "warm",
+      "shortDescription": "Awake newborn with glass eyes that seem to think.",
+      "story": "",
+      "specs": {},
+      "images": []
+    }
+  ],
+  "categories": {
+    "newborns": "Soft, sleeping or drowsy, weighted to feel newly arrived.",
+    "toddlers": "Older children, painted or rooted hair, more poseable.",
+    "bespoke": "A reborn made from your reference photographs."
+  }
+}

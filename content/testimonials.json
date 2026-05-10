@@ -1,0 +1,15 @@
+{
+  "$schema": "Real testimonials only. Never fabricate. Empty array OK.",
+  "testimonials": [
+    {
+      "id": "helen-2025",
+      "author": "Helen S.",
+      "location": "",
+      "doll": "Mira",
+      "year": 2025,
+      "text": "She arrived wrapped in linen, and I cried before I even unwrapped her. I have collected dolls for thirty years. None of them have ever felt like this.",
+      "verified": false,
+      "$note": "Placeholder. Replace with real Arisa testimonial when available."
+    }
+  ]
+}
