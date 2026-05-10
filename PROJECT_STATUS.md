@@ -1,17 +1,18 @@
 # PROJECT_STATUS.md — Arisa in WonderDolls
 
 > Live status. Atnaujinama po kiekvienos sesijos (žr. `/close-session`).
-> Last updated: 2026-05-10 (post close-session, naktis #4 — commits + push'inta)
+> Last updated: 2026-05-10 (post close-session, sesija #5 — full content layer + numbered catalog)
 
 ## OVERALL
 
-**Phase:** P1 — Foundation & Core Pages (80% — visual + photo content + consent + TH localization done; integrations + i18n pending)
-**Pabaigtumas:** ~78% (svetainės content layer)
-**Production:** ⚠️ Preview live `https://arisa-gules.vercel.app/` — ne owned domain
+**Phase:** P1 — Foundation & Core Pages (90% — full content layer + numbered catalog done; SEO + integrations + Vercel deploy switch pending)
+**Pabaigtumas:** ~85% (svetainės content layer)
+**Production:** ⚠️ Preview live `https://arisa-gules.vercel.app/` — vis dar rodo seną `main` state (Lithuania/EUR/placeholder). Reikia Vercel UI production branch switch į `migrated-from-onedrive`.
 **Domain:** ⬜ Not registered (proposed: `arisainwonderdolls.com`)
 **Repo:** https://github.com/riko8825/Arisa
-**Branch:** `migrated-from-onedrive` @ `a99c22b` (active dev, push'inta) — 4 commits ahead of `main`. `main` (`22f6abb`) vis dar mapped į Vercel auto-deploy → preview rodo seną state.
+**Branch:** `migrated-from-onedrive` @ `9f1ce09` (active dev, push'inta) — 9 commits ahead of `main` (unrelated histories). `main` (`22f6abb`) vis dar mapped į Vercel auto-deploy. Lokali `main` ištrinta po sesijos #5 saugumui.
 **Locale:** Thailand (atelier), THB currency, EN copy. FX €→฿ ×38, kainos suapvalintos iki 500 THB.
+**Photos:** 61 unikalios nuotraukos production'e (7 dolls + process + atelier + customers + earlier intake), pilnas numbered katalogas gallery.html.
 
 ---
 
@@ -19,11 +20,11 @@
 
 | Page | File | Structure | Copy | Real images | SEO meta | Schema | Consent | FAB | Mobile QA | Status |
 |---|---|---|---|---|---|---|---|---|---|---|
-| Home | `index.html` | ✅ | ⚠️ placeholder | ✅ 11 photos | ✅ | ✅ Store+founder (TH/THB) | ✅ | ✅ | ⬜ | 80% |
-| Nursery | `shop.html` | ✅ | ⚠️ placeholder | ✅ 9 photos | ⬜ | ⚠️ ItemList (TH/THB) | ✅ | ✅ | ⬜ | 65% |
-| Product | `product.html` | ✅ | ⚠️ placeholder | ✅ 9 photos | ⬜ | ⚠️ Product (THB price) | ✅ | ✅ | ⬜ | 65% |
-| Portfolio | `gallery.html` | ✅ | ⚠️ placeholder | ✅ 13 photos | ⬜ | ⬜ ImageGallery | ✅ | ✅ | ⬜ | 60% |
-| Atelier | `about.html` | ✅ | ⚠️ placeholder (TH studio) | ✅ 6 photos | ⬜ | ⚠️ Person partial | ✅ | ✅ | ⬜ | 65% |
+| Home | `index.html` | ✅ | ⚠️ placeholder | ✅ 11 real | ✅ | ✅ Store+founder (TH/THB) | ✅ | ✅ | ⬜ | 85% |
+| Nursery | `shop.html` | ✅ | ⚠️ placeholder | ✅ 9 real (8 cards: 7 dolls + 1 WIP) | ⬜ | ⚠️ ItemList (TH/THB) | ✅ | ✅ | ⬜ | 75% |
+| Product | `product.html` | ✅ | ⚠️ placeholder (Pickle flagship) | ✅ 8 real (Pickle hero + 4 thumbs + diary + 3 related) | ⬜ | ⚠️ Product (THB price) | ✅ | ✅ | ⬜ | 75% |
+| Portfolio | `gallery.html` | ✅ FULL CATALOG | ✅ catalog copy | ✅ 61 numbered photos (No. 001–061) | ⬜ | ⬜ ImageGallery | ✅ | ✅ | ⬜ | 80% |
+| Atelier | `about.html` | ✅ | ⚠️ placeholder (TH studio) | ✅ 6 Arisa portraits | ⬜ | ⚠️ Person partial | ✅ | ✅ | ⬜ | 75% |
 | Adoption | `contact.html` | ✅ | ⚠️ placeholder | ⬜ | ⬜ | ⬜ ContactPage | ✅ | ✅ | ⬜ | 40% |
 | Privacy | `privacy.html` | ✅ | ✅ legal copy (TH PDPA) | n/a | ⬜ | ⬜ | ✅ | ✅ | ⬜ | 70% |
 | Terms | `terms.html` | ✅ | ✅ legal copy (Thai law) | n/a | ⬜ | ⬜ | ✅ | ✅ | ⬜ | 70% |
@@ -45,13 +46,15 @@
 | `assets/silktide/silktide-consent-manager.css` | ✅ NEW | Vendor (12 KB) — consent banner + modal styling. |
 | `assets/favicon.svg` | ✅ | SVG monogram (primary favicon) |
 | `assets/img/logo.jpg` | ✅ | Trimmed logo, 600×337, 38 KB. Cache-bust `?v=2` aktyvus. |
-| `assets/img/_raw/` | ✅ | Originals archive — 11 photos + transparent logo (~9.7 MB). NEDEPLOY (atskira folder, ne reference'inta HTML). |
-| `assets/img/about/studio.jpg` | ✅ | 231 KB optimized (originalas 2.1 MB PNG → JPG, -89%). |
-| `assets/img/products/` | ⚠️ | 3 lifestyle/doll photos (carrier, matcha-cafe, toddler-studio). Reikia tikrų Liora/Theo/Margot/Soren product shots. |
-| `assets/img/testimonials/` | ✅ | 6 customer photos (mother-daughter, arisa-with-girl, girl-cafe/car/garden, mom-beach). |
-| `assets/img/gallery/` | ⬜ | Folder yra, tuščias. Gallery puslapis dabar naudoja photos iš testimonials/products via background-image rotation. |
+| `assets/img/_raw/` | ✅ | Originals archive — `_raw/` (11 photos batch1) + `_raw/batch2/` (7 photos+logo, 9.7 MB) + `_raw/batch3/` (40 photos, 47 MB) + `_raw/batch4/` (4 photos, 14 MB). Total ~78 MB raw. NEDEPLOY (ne reference'inta HTML). |
+| `assets/img/about/` | ✅ | 7 photos: studio.jpg + 6 Arisa portraits (`arisa-{portrait,pink-studio,gray-studio,bear-doll,kimono,expo}.jpg`) |
+| `assets/img/products/<kit>/` | ✅ | 7 kit folders, 33 photos: pickle (7), june (4), luisa (6), demi (5), elf-fee (3), meadow (4), sue-sue (4) |
+| `assets/img/products/` (legacy) | ⚠️ | 3 earlier intake photos (carrier, matcha-cafe, toddler-studio) — only used in gallery.html "Earlier intake" section No. 059–061 |
+| `assets/img/process/` | ✅ NEW | 11 technique photos: 3 hair painting + 8 hair rooting (gallery No. 034–044) |
+| `assets/img/testimonials/` | ✅ | 7 photos: 6 customer + 1 arisa-restaurant (orphan asset, dar ne ref'inta) |
+| `assets/img/gallery/` | ⬜ | Folder yra, tuščias. Gallery dabar naudoja photos iš products/process/about/testimonials. |
 | `assets/img/og/` | ⚠️ | Using logo.jpg as OG fallback — need dedicated 1200×630 OG |
-| Logo transparent PNG | ✅ archived | `_raw/logo-transparent.png` (456 KB). Per userio sprendimą HTML referencija lieka `logo.jpg`. |
+| Logo transparent PNG | ✅ archived | `_raw/logo-transparent.png` + `_raw/logo-transparent-v2.png` (per userio sprendimą HTML referencija lieka `logo.jpg`). |
 
 ---
 
@@ -83,7 +86,7 @@
 
 | File | Status | Notes |
 |---|---|---|
-| `content/products.json` | ⬜ TODO | Placeholder schema sukurta, 20 dolls structure. `currency: THB`, "imported mohair" copy. |
+| `content/products.json` | ✅ Real (7 dolls) | THB currency + fxNote (EUR→THB ×38). 7 dolls: Pickle/June/Luisa/Demi/Elf Fee/Meadow/Sue Sue su pilnomis story/specs/images. Pickle = flagship, Sue Sue = reserved. Story tekstai laukia Arisa review |
 | `content/testimonials.json` | ⬜ TODO | Phase 1 — 3-5 placeholder, Phase 2 — real iš Arisa |
 | `content/faq.json` | ⬜ TODO | Adoption process, shipping, care, returns |
 

@@ -339,6 +339,45 @@
 
 ---
 
+## D-019 · 2026-05-10 · Vercel deploy switch — UI vs git merge (unrelated histories)
+
+**Sprendimas:** Vercel production branch keisti per UI iš `main` → `migrated-from-onedrive`. NESUDĖTI `git merge --allow-unrelated-histories`.
+
+**Kodėl:**
+- `main` (`22f6abb`) ir `migrated-from-onedrive` (`9f1ce09`) turi visiškai skirtingą git istoriją (skirtingi root commits — pirmas iš `c:\Users\pinig\Arisa\`, antras iš OneDrive folder migration session #4 metu)
+- `git merge --ff-only` fail'ino: "fatal: refusing to merge unrelated histories"
+- `--allow-unrelated-histories` būtų sukėlęs merge conflicts visuose HTML failuose (Lithuania/EUR vs Thailand/THB content) — kelios valandos manual resolve'inimo
+- `git push --force` būtų ištrinęs senąjį main istoriją (riziko's negrįžimas)
+- Vercel UI keitimas yra atomic, instant, nepaliečia git history, leidžia rollback per 1 click
+
+**Trade-off:** 
+- Reikia maintainer'io/kliento veiksmo per Vercel dashboard (ne automatic). Jei klientė nepadarys, live preview lieka rodyti seną main
+- Senasis `main` lieka "orphan" branch su lithuania content. Future cleanup task — galima būtų delete'inti `origin/main` GitHub'e arba force-push naują content
+
+**Kas paveikta:** deploy pipeline (Vercel project settings), live preview URL `arisa-gules.vercel.app` rendering. Lokali `main` branch ištrinta saugumui (kad išvengti atsitiktinio `git checkout main` perrašant working tree senuoju content — atsitiko sesijos #5 metu, bet atstatėm).
+
+---
+
+## D-020 · 2026-05-10 · Photo organization: per-kit subfolders + sequential numbered catalog
+
+**Sprendimas:** Photos suskirstytos į `assets/img/products/<doll-slug>/` subfolders (ne flat). Gallery.html rodo visus 61 photos su sequential `No. 001`–`No. 061` numbering, sugrupuotus į kategorijas.
+
+**Kodėl:**
+- 7 dolls × 3-7 photos per doll = 33 photos. Flat struktūra (`pickle-1.jpg`, `pickle-2.jpg`) būtų greitai netvarkinga
+- `products.json` `images` array referencija per doll natūralu su subfolder
+- Klientės workflow: peržiūri katalogą → pasako "pakeisk No. 023" — tikslus reference. Be numeracijos — "pakeisk Elf Fee detail su ear" yra ambiguous
+- 61 photos vienoje page = pilnas vizualinis archive. Klientė matys ką turi prieš nusprendžiant ką šalinti
+- Aspect rotation `idx % 10` masonry leidžia visual variety be manual config per kiekvieną photo
+
+**Trade-off:**
+- 61 background-image užkraunami vienu metu = potential per-page weight viršija 1.5 MB CLAUDE.md budget'ą. Lazy-loading nepridėta (carry-over)
+- Earlier intake photos (No. 059–061) — placeholder iš batch1, ne real product. Reikia kliento sprendimo: palikti ar šalinti
+- Aspect rotation algorithm `idx % 10` blogai handle'ina edge cases — kai kurios portrait nuotraukos atsiduria landscape slot'uose ir crop'ina nepalankiai. Reikia visual review
+
+**Kas paveikta:** `assets/img/products/{pickle,june,luisa,demi,elf-fee,meadow,sue-sue}/` (7 nauji subfolders, 33 photos), `assets/img/process/` (11 photos), `gallery.html` (full rebuild, 61 numbered frames per 5 sections), `content/products.json` (image arrays per doll su subfolder paths)
+
+---
+
 ## Template naujam įrašui
 
 ```

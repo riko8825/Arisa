@@ -2,11 +2,108 @@
 
 > Šios sesijos snapshot. Perrašoma kiekvieną kartą su `/start-task` ir `/close-session`.
 
-## Paskutinė sesija: 2026-05-10
+## Paskutinė sesija: 2026-05-10 (sesija #5 — full content layer + numbered catalog)
 
-**Self-score:** 7/10 · **Pabaigtumas:** 22% (1/5 modulių iš MVP scope)
+**Self-score:** 7/10 · **Pabaigtumas:** ~85% (svetainės content layer; integracijos + Vercel deploy switch dar laukia)
 
 ### Kontekstas
+Klientė atsiuntė 4 ZIP batch'us su nuotraukomis per vakarą:
+- Batch 2 (`me-and-doll`): 7 photos + 1 transparent PNG logo (logo'o nepakeitėm per kliento sprendimą)
+- Batch 3 (8 ZIP): 51 raw photo — 6 doll kits (Pickle, Luisa, Elf Fee, Meadow, Demi, Sue Sue) + hair painting + hair rooting techniques
+- Batch 4 (`june-asleep`): 4 photos = 7th doll June (sleeping newborn)
+- Galutinis prašymas: "visos nuotraukos turi atsirasti svetainėje, sunumeruok"
+
+Iki sesijos pradžios visi HTML puslapiai naudojo placeholder photos + 4 fake dolls (Liora/Theo/Margot/Soren). Po sesijos: 7 realios dolls, 61 numbered photos, full content layer.
+
+### Ką padarėme
+
+**1. Arisa portraits (commit `7d79d16`):**
+- 6 photos → `assets/img/about/arisa-{portrait,pink-studio,gray-studio,bear-doll,kimono,expo}.jpg`
+- 1 photo → `assets/img/testimonials/arisa-restaurant.jpg` (passive asset, dar ne integruota)
+- `about.html`: hero portrait + studio diary + 4 "Featured & collected by" thumbnails — visi swapped į Arisa portraits
+- Transparent logo (IMG_2061.PNG) archyvuotas `_raw/logo-transparent-v2.png` (per kliento sprendimą HTML logo nekeitėm)
+- Originalai: `_raw/batch2/` (9.7 MB)
+
+**2. 6 doll kits + process techniques (commit `c531fcc`):**
+- 40 photos optimizuotos (HEIC→JPG, 1400px max, JPEG q=85, 110-260 KB each)
+- Per kit folders: `assets/img/products/{pickle,luisa,elf-fee,meadow,demi,sue-sue}/` (29 photos)
+- `assets/img/process/` (11 photos: 3 painting + 8 rooting)
+- `content/products.json`: pertvarkyta nuo 4 placeholder į 6 real dolls su pilnomis story/specs/images strukktūromis. Pridėta `fxNote` apie EUR→THB konversiją
+- `shop.html`: 8 product cards (6 real + 2 in-studio WIP)
+- `gallery.html`: 12 portfolio items (mix kit + process)
+- `product.html`: rebuilt kaip Pickle flagship PDP (1 hero + 4 thumbs + studio diary + 3 related)
+- `index.html`: hero + 4 product cards + atelier diary + 3 categories — visi swapped
+- Originalai: `_raw/batch3/` (47 MB)
+
+**3. June, 7th doll (commit `d9d8fe0`):**
+- 4 photos → `assets/img/products/june/{portrait-closeup,lifestyle-bear-bonnet,sleeping-in-cot,in-car-seat}.jpg`
+- `products.json`: appended June kaip 7th įrašas (sleeping newborn 19", 57,500 THB, available)
+- `shop.html`: No. 07 "in rooting" WIP card → June real card; No. 08 "in painting" WIP retained
+- `gallery.html`: 1 Pickle tutu → June sleeping-in-cot
+- Originalai: `_raw/batch4/` (14 MB)
+
+**4. Gallery 61-photo numbered katalogas (commit `9f1ce09`):**
+- Full rebuild — 61 nuotraukos su sequential `No. 001`–`No. 061` numbering
+- 5 kategorijos: In the nursery (33 frames per 7 dolls), Process (11), Atelier (7), Out in the world (7), Earlier intake (3)
+- Aspect rotation per masonry (portrait/square/tall/landscape) visual variety'ui
+- Toolbar: chips per kategorijas + "61 frames" indicator
+- Page lede perrašytas katalogo paskirčiai
+- Verified: 61 numbered, 0 duplicates, all paths exist
+
+**5. Vercel deploy strategy decision:**
+- Patikrinta `migrated-from-onedrive` vs `main` history → unrelated histories (skirtingi root commits, "fatal: refusing to merge")
+- Bandymas `git checkout main` perrašė working tree senuoju Lithuania/EUR content — atstatyta `git checkout migrated-from-onedrive` (sėkmingai dėl up-to-date state)
+- Sprendimas: NEsudėti git merge — keisti Vercel production branch per UI iš `main` į `migrated-from-onedrive`
+- Lokali `main` branch ištrinta (`git branch -d main`) kad išvengti atsitiktinio checkout'o
+- Veiksmas atviras klientui: Vercel UI → arisa-gules → Settings → Git → Production Branch keitimas
+
+### Verifikacija
+- ✅ `gallery.html`: 61 numbered photos, 0 duplicates, all paths exist (Python verification)
+- ✅ Visi 5 commits push'inti į `origin/migrated-from-onedrive`
+- ✅ Working tree clean
+- ✅ Optimization: 40+4+6 = 50 photos, ~7.8 MB optimized total (per-page budget OK pagal CLAUDE.md)
+- ✅ HEIC→JPG via Python `pillow-heif` + `ImageOps.exif_transpose`
+- ⚠️ Lighthouse / CWV nepatikrinta (gallery.html 61 background-image gali pažeisti < 1.5 MB per-page budget'ą)
+- ⚠️ Mobile responsive testing nepadaryta (gallery aspect rotation not visually verified)
+- ⚠️ `vercel dev` smoke test nepaleistas
+
+### Kas liko / nepatvirtinta
+- ⬜ **Vercel production branch switch** (`main` → `migrated-from-onedrive`) — manualus klientės/maintainer'io darbas per Vercel UI. Be šio žingsnio live preview rodo seną main commit (`22f6abb`) ir klientė nemato katalogo
+- ⬜ Gallery.html performance audit — 61 photos užkrauna vienu metu, lazy-loading nepridėta (only top ~10 frames matomi above fold)
+- ⬜ Aspect rotation visual review — algorithm naudoja `idx % 10`, kai kurios portrait nuotraukos gali atsidurti landscape slot'e ir crop'ina nepalankiai
+- ⬜ Mobile responsive check — naujos sections (catalog-group + masonry) gali turėti positioning issues
+- ⬜ `arisa-restaurant.jpg` orphan asset (sukurta session #2) — niekur ne reference'inta, kandidatas remove ARBA pridėti į gallery.html section
+- ⬜ `api/lead-capture.ts` skeleton vis dar ne wired'inta į contact.html (nuo session #1)
+- ⬜ Vercel env vars (RESEND_API_KEY, LEAD_CAPTURE_SECRET) nesukonfigūruoti
+- ⬜ Per-page SEO meta + schema.org 8 puslapiams (carry-over nuo session #1)
+- ⬜ Real testimonials JSON (still placeholder)
+
+### Atviri klausimai klientei (Arisa)
+1. Po katalogo peržiūros — kuriuos `No. NNN` photos pakeisti / pašalinti / palikti?
+2. Earlier intake (No. 059–061) — palikti ar šalinti? Tai reborn-carrier/matcha-cafe/toddler-studio iš pirmo batch'o
+3. Doll story tekstai products.json (Pickle/June/Luisa/etc) — tikslūs ar perrašyti?
+4. Sue Sue marked as `reserved` — ar ji jau adopted, ar laisva?
+5. Founding year 2020 confirmation (per logo "Since 2020", brief sakė 2021)
+
+### Kitas žingsnis (priority order)
+
+1. **Vercel production branch switch** (klientė/maintainer per Vercel UI) — be šio nieko nematysi live'e
+2. **Gallery performance audit + lazy-loading** — `loading="lazy"` ant background-image arba native HTML `<img>` su `loading="lazy"` migracija. Lighthouse run prieš ir po
+3. **Klientės photo selection round** — gauti grįžtamą atsakymą kuriuos `No. NNN` keisti
+4. **Per-page SEO meta + schema.org** (8 puslapiai)
+5. **`api/lead-capture.ts` integracija** + Vercel env vars + smoke test
+
+### Commits šioje sesijoje
+| # | Hash | Trumpinys |
+|---|---|---|
+| 1 | `7d79d16` | feat(about): add 6 artist portrait photos, archive transparent logo |
+| 2 | `c531fcc` | feat: integrate 6 real doll kits + process technique photos |
+| 3 | `d9d8fe0` | feat: add June, 7th doll (sleeping newborn) |
+| 4 | `9f1ce09` | feat(gallery): show full 61-photo catalog with sequential numbering |
+
+4 commits, ~150 files added/modified, ~78 MB (originals) + 7.8 MB (optimized) added. Lokali `main` branch ištrinta.
+
+### Kontekstas (originali sesija #1, palikta žemiau)
 Pirmoji setup sesija. Klientas (Arisa) atsiuntė intake form 2026-05-10. Repo turėjo 8 HTML puslapius be CSS/JS — puslapis lūžo (unstyled). Sesijos metu pridėtas pilnas vizualinis sluoksnis, agency-grade docs struktūra, integruotas kliento logo.
 
 ### Ką padarėme
