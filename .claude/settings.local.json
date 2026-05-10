@@ -1,0 +1,31 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(git status:*)",
+      "Bash(git diff:*)",
+      "Bash(git log:*)",
+      "Bash(git add:*)",
+      "Bash(git commit:*)",
+      "Bash(git push origin main:*)",
+      "Bash(curl -s:*)",
+      "Bash(curl -sI:*)",
+      "Bash(curl -sL:*)",
+      "Bash(ls:*)",
+      "Bash(wc:*)",
+      "Bash(file:*)",
+      "Bash(mkdir -p:*)",
+      "Bash(cp:*)",
+      "Bash(rm assets/img/logo-trimmed.jpg)",
+      "Bash(for f in *.html; do sed -i:*)",
+      "Bash(sed -i:*)",
+      "Bash(python:*)",
+      "Bash(python -c:*)"
+    ],
+    "deny": [
+      "Bash(rm -rf:*)",
+      "Bash(git reset --hard:*)",
+      "Bash(git push --force:*)",
+      "Bash(git push -f:*)"
+    ]
+  }
+}
