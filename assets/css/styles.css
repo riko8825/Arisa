@@ -235,8 +235,8 @@ hr { border: none; }
   object-fit: contain;
 }
 .brand-logo--small { height: 44px; }
-.site-header .brand-logo { height: 65px; }
-.mobile-menu-head .brand-logo { height: 52px; }
+.site-header .brand-logo { height: 70px; }
+.mobile-menu-head .brand-logo { height: 56px; }
 .site-footer .brand-logo {
   height: 80px;
   filter: brightness(0) invert(1);
@@ -1216,9 +1216,9 @@ hr { border: none; }
 @media (max-width: 720px) {
   .nav-links { display: none; }
   .hide-desktop { display: inline-flex; }
-  .nav { min-height: 76px; }
+  .nav { min-height: 80px; }
   .site-header .brand { padding-right: 12px; }
-  .site-header .brand-logo { height: 56px; }
+  .site-header .brand-logo { height: 60px; }
   .topbar .meta { display: none; }
   .grid-4, .grid-3, .grid-2 { grid-template-columns: 1fr; }
   .footer-grid { grid-template-columns: 1fr; gap: 32px; }
