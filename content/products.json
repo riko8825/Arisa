@@ -1,6 +1,6 @@
 {
   "$schema": "Master list of dolls. Single source of truth. Update this, then sync HTML manually (or via future build step).",
-  "currency": "EUR",
+  "currency": "THB",
   "dolls": [
     {
       "id": "liora",
@@ -19,7 +19,7 @@
       "specs": {
         "kit": "Limited-edition vinyl, signed and numbered",
         "paint": "Genesis heat-set, 28 layers",
-        "hair": "European mohair, micro-rooted by hand",
+        "hair": "Imported mohair, micro-rooted by hand",
         "eyes": "German glass, closed",
         "body": "Soft cotton cloth, weighted with glass beads",
         "shipping": "Insured worldwide, linen-lined cradle box"

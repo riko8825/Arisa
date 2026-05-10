@@ -41,7 +41,7 @@ Quiet. Tender. Editorial. Personal.
 |---|---|---|---|
 | Display | Cormorant Garamond | 400, italic 300 | H1, H2, hero, product names |
 | Body | Inter | 300, 400, 500 | Paragraphs, nav, buttons |
-| Mono | JetBrains Mono | 400 | Eyebrows, prices, meta, "ATELIER · LITHUANIA" |
+| Mono | JetBrains Mono | 400 | Eyebrows, prices, meta, "ATELIER · THAILAND" |
 
 **Italic swashes** — Cormorant italic 300 — reserved for **emotional words**: "tenderly", "souls", "in WonderDolls", "looking for a home".
 

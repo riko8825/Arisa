@@ -556,6 +556,12 @@ hr { border: none; }
 .imgph.ar-portrait { aspect-ratio: 4 / 5; }
 .imgph.ar-square { aspect-ratio: 1 / 1; }
 .imgph.ar-landscape { aspect-ratio: 4 / 3; }
+.imgph.has-photo {
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+.imgph.has-photo::before { display: none; }
 
 .imgph .corner {
   position: absolute;
@@ -822,6 +828,52 @@ hr { border: none; }
   letter-spacing: -.005em;
 }
 .footer-grid a:hover { color: var(--blush); }
+.social-icons {
+  display: inline-flex;
+  gap: 14px;
+  margin-top: 14px;
+}
+.social-icons a {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  padding: 0;
+  border: 1px solid rgba(255,252,248,.22);
+  border-radius: 50%;
+  color: var(--porcelain);
+  transition: background-color .2s ease, border-color .2s ease, transform .2s ease;
+}
+.social-icons a:hover {
+  background: var(--blush);
+  border-color: var(--blush);
+  color: var(--ink);
+  transform: translateY(-2px);
+}
+.social-icons svg {
+  width: 22px;
+  height: 22px;
+  display: block;
+}
+.contact-card .social-icons {
+  margin-top: 4px;
+}
+.contact-card .social-icons a {
+  border-color: rgba(28,26,24,.18);
+  color: var(--ink);
+  width: 48px;
+  height: 48px;
+}
+.contact-card .social-icons a:hover {
+  background: var(--ink);
+  border-color: var(--ink);
+  color: var(--porcelain);
+}
+.contact-card .social-icons svg {
+  width: 24px;
+  height: 24px;
+}
 .footer-bar {
   display: flex;
   justify-content: space-between;
@@ -1241,4 +1293,98 @@ hr { border: none; }
     transition-duration: .01ms !important;
   }
   .reveal { opacity: 1; transform: none; }
+}
+
+/* Legal tables (privacy, terms) */
+.legal-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: var(--space-m) 0 var(--space-l);
+  font-size: 14px;
+  line-height: 1.6;
+}
+.legal-table th,
+.legal-table td {
+  text-align: left;
+  vertical-align: top;
+  padding: 12px 14px;
+  border-bottom: 1px solid var(--line);
+}
+.legal-table th {
+  font-family: var(--mono);
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: .14em;
+  text-transform: uppercase;
+  color: var(--ink-3);
+  background: var(--paper);
+}
+.legal-table tbody tr:last-child td { border-bottom: 0; }
+.legal-table a { color: var(--ink); text-decoration: underline; text-decoration-thickness: 1px; text-underline-offset: 2px; }
+.legal-table a:hover { color: var(--gold); }
+
+/* Silktide consent — brand alignment overrides */
+.stcm-banner,
+.stcm-modal {
+  font-family: var(--font-body, Inter, system-ui, sans-serif);
+}
+.stcm-banner a,
+.stcm-modal a { color: var(--ink); text-decoration: underline; text-underline-offset: 2px; }
+.stcm-banner a:hover,
+.stcm-modal a:hover { color: var(--gold); }
+
+/* ---------- Floating contact buttons (WhatsApp + LINE) ---------- */
+.fab-stack {
+  position: fixed;
+  right: 24px;
+  bottom: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  z-index: 120;
+  pointer-events: none;
+}
+.fab-stack .fab {
+  pointer-events: auto;
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-decoration: none;
+  box-shadow: 0 4px 14px rgba(26, 20, 16, .18), 0 1px 2px rgba(26, 20, 16, .12);
+  transition: transform .2s var(--ease), box-shadow .2s var(--ease), background-color .2s var(--ease);
+  will-change: transform;
+}
+.fab-stack .fab svg {
+  width: 28px;
+  height: 28px;
+  fill: #fff;
+  display: block;
+}
+.fab-stack .fab--whatsapp { background: #25D366; }
+.fab-stack .fab--line { background: #06C755; }
+.fab-stack .fab:hover,
+.fab-stack .fab:focus-visible {
+  transform: translateY(-2px) scale(1.04);
+  box-shadow: 0 8px 20px rgba(26, 20, 16, .22), 0 2px 4px rgba(26, 20, 16, .14);
+  outline: none;
+}
+.fab-stack .fab--whatsapp:hover,
+.fab-stack .fab--whatsapp:focus-visible { background: #1FBE5C; }
+.fab-stack .fab--line:hover,
+.fab-stack .fab--line:focus-visible { background: #05B34D; }
+.fab-stack .fab:focus-visible {
+  box-shadow: 0 0 0 3px var(--porcelain), 0 0 0 5px var(--ink), 0 8px 20px rgba(26, 20, 16, .22);
+}
+@media (max-width: 720px) {
+  .fab-stack { right: 16px; bottom: 16px; gap: 10px; }
+  .fab-stack .fab { width: 52px; height: 52px; }
+  .fab-stack .fab svg { width: 26px; height: 26px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .fab-stack .fab { transition: none; }
+  .fab-stack .fab:hover,
+  .fab-stack .fab:focus-visible { transform: none; }
 }

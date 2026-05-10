@@ -22,7 +22,7 @@
   }
 
   function formatPrice(n) {
-    return '€ ' + (n || 0).toLocaleString('en-US');
+    return '฿ ' + (n || 0).toLocaleString('en-US');
   }
 
   function render() {

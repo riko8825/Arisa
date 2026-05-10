@@ -27,7 +27,7 @@ Three audiences read the same words. Copy must work for all three:
 - Use numbers: "30 layers of paint", "six to ten weeks", "217 souls adopted"
 - Refer to dolls as **she/he/they**, names. Not "it" or "the product".
 - Use "adoption" for purchase. "Adopt", "homecoming", "in the nursery", "wait list".
-- Footnote facts that build trust: "Genesis heat-set paint", "German glass eyes", "European mohair"
+- Footnote facts that build trust: "Genesis heat-set paint", "German glass eyes", "imported mohair"
 
 ### ❌ Don't
 
@@ -43,7 +43,7 @@ Three audiences read the same words. Copy must work for all three:
 ### Tone calibration
 
 **Too cold (don't):**
-> Reborn doll. 19in. Genesis paint. €1,480. In stock.
+> Reborn doll. 19in. Genesis paint. ฿56,000. In stock.
 
 **Too hot (don't):**
 > Meet Liora! 💕 She's an absolutely stunning sleeping baby and we just KNOW you're going to fall in love with her perfect little face!
@@ -105,4 +105,4 @@ When writing copy, source facts from:
 ## Localization
 
 Phase 1: English only.
-If multi-lang Phase 2 — start with Lithuanian, then German (collector market).
+If multi-lang Phase 2 — start with Thai, then English-only collector market.

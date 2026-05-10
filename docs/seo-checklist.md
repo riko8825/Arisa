@@ -55,7 +55,7 @@ Add prie esamo `Store` schema (`index.html`):
   "offers": {
     "@type": "Offer",
     "url": "https://arisainwonderdolls.com/product.html?id=liora",
-    "priceCurrency": "EUR",
+    "priceCurrency": "THB",
     "price": "1480",
     "availability": "https://schema.org/InStock",
     "itemCondition": "https://schema.org/NewCondition"
@@ -82,7 +82,7 @@ Sitemap: https://arisainwonderdolls.com/sitemap.xml
 ## Keyword targeting (Phase 2)
 
 Primary keyword groups for Arisa:
-- "reborn doll" + ["handmade", "artist", "European", "lifelike", "adoption"]
+- "reborn doll" + ["handmade", "artist", "Thailand", "Bangkok", "lifelike", "adoption"]
 - "reborn baby" + ["sleeping", "newborn", "toddler", "awake"]
 - "[doll name]" — long tail per product (Liora, Theo, Margot)
 - "reborn nursery"
