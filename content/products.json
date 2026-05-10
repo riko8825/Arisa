@@ -178,6 +178,35 @@
         "assets/img/products/sue-sue/detail-leg-skin.jpg",
         "assets/img/products/sue-sue/wip-bald-unfinished.jpg"
       ]
+    },
+    {
+      "id": "june",
+      "name": "June",
+      "slug": "june-sleeping-newborn",
+      "type": "newborn",
+      "state": "sleeping",
+      "sizeIn": 19,
+      "weightLb": 4.4,
+      "price": 57500,
+      "status": "available",
+      "tag": "new",
+      "tone": "warm",
+      "shortDescription": "Deeply sleeping newborn with painted hair and a softly settled face.",
+      "story": "June is the kind of doll you photograph in everything — a corduroy bear-print outfit, a frilled bonnet, a Maxi-Cosi car seat ready for the trip home. She arrives sleeping and stays sleeping; the atelier finished her in late spring, when the light comes in slow.",
+      "specs": {
+        "kit": "June newborn sculpt",
+        "paint": "Genesis heat-set, 24 layers",
+        "hair": "Hand-painted, soft layered",
+        "eyes": "German glass, closed",
+        "body": "Soft cotton, weighted with glass beads",
+        "shipping": "Insured worldwide, linen-lined cradle box"
+      },
+      "images": [
+        "assets/img/products/june/portrait-closeup.jpg",
+        "assets/img/products/june/lifestyle-bear-bonnet.jpg",
+        "assets/img/products/june/sleeping-in-cot.jpg",
+        "assets/img/products/june/in-car-seat.jpg"
+      ]
     }
   ],
   "categories": {
