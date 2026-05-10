@@ -1,0 +1,46 @@
+# Env / secrets — NEVER commit
+.env
+.env.local
+.env.*.local
+*.pem
+*.key
+
+# Vercel
+.vercel
+.next
+.turbo
+
+# Node (jei prisidės bet kokio dependency)
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+package-lock.json
+yarn.lock
+
+# OS
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Editors
+.vscode/*
+!.vscode/settings.json
+!.vscode/extensions.json
+.idea/
+*.swp
+*.swo
+
+# Logs / tmp
+*.log
+tmp/
+temp/
+
+# Build output
+dist/
+build/
+out/
+
+# Misc
+.cache/
+*.bak

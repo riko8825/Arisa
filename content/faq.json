@@ -1,0 +1,49 @@
+{
+  "$schema": "FAQ entries shown on contact and product pages. Update as Arisa receives questions.",
+  "categories": [
+    {
+      "title": "Adoption process",
+      "items": [
+        {
+          "q": "How do I reserve a doll?",
+          "a": "Add the doll to your basket and complete the adoption form. Arisa will reply within 24 hours with bank transfer details and confirm her availability."
+        },
+        {
+          "q": "Can I commission a custom doll?",
+          "a": "Yes. Use the contact form and share your reference photographs and any details. Bespoke commissions take ten to sixteen weeks."
+        }
+      ]
+    },
+    {
+      "title": "Shipping",
+      "items": [
+        {
+          "q": "Where do you ship?",
+          "a": "Worldwide. Every doll travels in a linen-lined cradle box with full tracking and insurance."
+        },
+        {
+          "q": "How long does shipping take?",
+          "a": "Within Europe: 3–7 working days. Outside Europe: 7–14 working days, depending on customs."
+        }
+      ]
+    },
+    {
+      "title": "Care",
+      "items": [
+        {
+          "q": "How do I care for a reborn doll?",
+          "a": "Keep her out of direct sunlight and away from heat. Clean gently with a soft, slightly damp cloth. Never machine wash. Brush mohair with a soft baby brush."
+        }
+      ]
+    },
+    {
+      "title": "Returns",
+      "items": [
+        {
+          "q": "Can I return an adopted doll?",
+          "a": "Each doll is one-of-one and made by hand, so we do not accept returns. We do guarantee safe arrival — if anything is damaged in transit, please write to us within 48 hours."
+        }
+      ]
+    }
+  ]
+}
