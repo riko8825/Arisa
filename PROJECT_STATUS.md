@@ -37,11 +37,12 @@
 | `assets/css/styles.css` | ✅ | Editorial atelier stylesheet, responsive, ~600 lines |
 | `assets/js/main.js` | ✅ | Mobile menu, reveal, toast, chips, thumbs |
 | `assets/js/cart.js` | ✅ | localStorage cart with drawer |
-| `assets/favicon.svg` | ✅ | Monogram placeholder until logo arrives |
+| `assets/favicon.svg` | ✅ | SVG monogram (primary favicon) |
+| `assets/img/logo.jpg` | ✅ | Real logo from Arisa, 45 KB, used everywhere |
 | `assets/img/products/` | ⬜ | Need 20 doll photos from Arisa |
 | `assets/img/gallery/` | ⬜ | Need atelier + behind-the-scenes shots |
-| `assets/img/og/` | ⬜ | Need 1200×630 OG image |
-| Logo file | ⬜ | Arisa to send |
+| `assets/img/og/` | ⚠️ | Using logo.jpg as OG fallback — need 1200×630 dedicated OG |
+| Logo SVG/PNG transparent | ⬜ | Phase 2 ask Arisa — current JPG has white bg |
 
 ---
 

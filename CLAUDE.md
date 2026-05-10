@@ -36,7 +36,8 @@ E-commerce + portfolio svetainė vienos moters atelier'ui, kuri rankomis kuria r
 **Tagline:** Unique reborn dolls for collectors and dreamers
 **Vibe:** Soft pink, cream, blue, white — dreamy luxury nursery aesthetic, editorial atelier feel
 **Theme:** Light only (jokio dark mode)
-**Logo:** Arisa atsiųs failą — kol nėra, naudojam monogram favicon (`assets/favicon.svg`)
+**Logo:** ✅ Gautas — `assets/img/logo.jpg` (sleeping baby illustration + script wordmark, "Since 2020")
+**Founding year:** **2020** (per logo — NE 2021. Pataisėm visur 2026-05-10)
 
 ### Color tokens (jau implementuoti `assets/css/styles.css`)
 - `--porcelain` `#FFFCF8` — main background

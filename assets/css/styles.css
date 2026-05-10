@@ -214,36 +214,30 @@ hr { border: none; }
   align-items: center;
   justify-content: space-between;
   gap: 24px;
-  min-height: 80px;
+  min-height: 88px;
+  padding: 8px 0;
 }
 .brand {
   display: inline-flex;
   align-items: center;
   gap: 14px;
-  font-family: var(--serif);
-  font-size: 22px;
   color: var(--ink);
-  letter-spacing: -0.01em;
-  line-height: 1.1;
+  line-height: 1;
 }
-.brand small {
+.brand-logo {
+  height: 64px;
+  width: auto;
   display: block;
-  font-family: var(--mono);
-  font-size: 9.5px;
-  font-weight: 400;
-  letter-spacing: .22em;
-  text-transform: uppercase;
-  color: var(--ink-3);
-  margin-top: 3px;
-}
-.brand-mark {
-  width: 36px; height: 36px;
-  border-radius: 50%;
-  background:
-    radial-gradient(circle at 35% 35%, #fff 0%, var(--blush) 45%, var(--cream) 100%);
-  border: 1px solid var(--line-2);
   flex-shrink: 0;
-  box-shadow: inset 0 0 0 4px rgba(255,252,248,.6);
+}
+.brand-logo--small { height: 44px; }
+.site-header .brand-logo { height: 60px; }
+.mobile-menu-head .brand-logo { height: 48px; }
+.site-footer .brand-logo {
+  height: 80px;
+  filter: brightness(0) invert(1);
+  opacity: .92;
+  margin-bottom: 24px;
 }
 
 .nav-links {
@@ -1218,7 +1212,8 @@ hr { border: none; }
 @media (max-width: 720px) {
   .nav-links { display: none; }
   .hide-desktop { display: inline-flex; }
-  .nav { min-height: 64px; }
+  .nav { min-height: 72px; }
+  .site-header .brand-logo { height: 48px; }
   .topbar .meta { display: none; }
   .grid-4, .grid-3, .grid-2 { grid-template-columns: 1fr; }
   .footer-grid { grid-template-columns: 1fr; gap: 32px; }

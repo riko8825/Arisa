@@ -63,12 +63,21 @@ Quiet. Tender. Editorial. Personal.
 
 ## Logo
 
-- **Status:** Arisa to send. Until then — `assets/favicon.svg` monogram.
-- **Usage rules** (kai bus):
-  - Min size: 24px height
-  - Clearspace: 1× height all sides
-  - Light bg only — light theme only
-  - Never recolor
+- **File:** `assets/img/logo.jpg` (45 KB, ~1024×1024)
+- **Type:** Illustrated mark — sleeping baby + script wordmark "Arisa in WonderDolls" + "Reborn Nursery" subtitle + "Since 2020" arc
+- **Colors in logo:** Pink script `#D94D72` (approx), blue script `#1E4F88` (approx), warm baby skin tones
+- **Used in:**
+  - Header (height 60px desktop, 48px mobile)
+  - Mobile menu head (height 48px)
+  - Footer (height 80px, white via `filter: brightness(0) invert(1)`)
+  - Favicon + apple-touch-icon
+  - OG image
+- **Usage rules:**
+  - Min size: 32px height
+  - Clearspace: 0.5× logo height all sides
+  - Light bg only — never recolor (only invert for dark footer)
+  - Don't crop the baby out — it's part of the mark
+  - Phase 2 ask Arisa for transparent PNG / SVG version (current JPG has white background)
 
 ## Photography direction
 

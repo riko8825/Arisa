@@ -36,7 +36,7 @@ Add prie esamo `Store` schema (`index.html`):
 {
   "@type": "Store",
   "founder": {"@type": "Person", "name": "Arisa"},
-  "foundingDate": "2021",
+  "foundingDate": "2020",
   "areaServed": "Worldwide",
   "paymentAccepted": "Bank Transfer"
 }

@@ -112,6 +112,38 @@
 
 ---
 
+## D-008 · 2026-05-10 · Founding year: 2020 (per logo, ne 2021)
+
+**Sprendimas:** Visur svetainėje, schema.org, ir docs — `foundingDate: 2020`. Atnaujinom HTML, CLAUDE.md, brand.md, seo-checklist.md.
+
+**Kodėl:**
+- Arisa atsiuntė logo, kuriame parašyta "Since 2020"
+- Logo = brand source of truth, ne pradinis brief
+- Geriau pataisyti vietoje, nei klausti ir atidėti deploy
+
+**Trade-off:** Jei Arisa pasakys, kad iš tiesų 2021 (logo klaida), reikės atstatyti — bet tai 1 atstatymo commit, žinome kur ieškoti (`grep "2020"`).
+
+**Kas paveikta:** index.html (hero badge + Store schema), gallery.html, CLAUDE.md, brand.md, seo-checklist.md, products.json (ateičiai)
+
+---
+
+## D-009 · 2026-05-10 · Logo: image-only header, be teksto
+
+**Sprendimas:** Header brand = vienas `<img class="brand-logo">`. Pašalintas `.brand-mark` gradient circle ir tekstinis "Arisa in WonderDolls" iš header'io ir mobile menu head'o. Logo image jau turi visą wordmark.
+
+**Kodėl:**
+- Logo turi pilną wordmark + sleeping baby + subtitle — tekstas šalia būtų dubliavimas
+- Tipografija logo'je labai specifinė (script handlettering) — bandymas matchint sistemos šriftais atrodytų prastai
+- Vienas image = paprastesnis maintenance, mažiau CSS, labiau brand-coherent
+
+**Trade-off:**
+- LCP — header logo dabar yra image (45 KB JPG). Atsipirkimas: image cached 1 metus per Vercel header (`max-age=31536000, immutable`).
+- Accessibility: `alt="Arisa in WonderDolls — Reborn Nursery"` + `aria-label` ant `<a>` — screen readers gauna pilną tekstą.
+
+**Kas paveikta:** visi 8 HTML failai, `assets/css/styles.css` (.brand, .brand-logo, .brand-mark removed)
+
+---
+
 ## Template naujam įrašui
 
 ```
