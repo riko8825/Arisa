@@ -269,19 +269,27 @@ Po naktinės photo integration sesijos (uncommitted). Userio užklausos: (1) suk
 - CSS turi 18 `fab-stack` referencijų + Silktide override blokai
 
 ### Kas liko / nepatvirtinta
-- ⬜ **Visa sesija uncommitted** — 16 modified + 6 untracked (3 sesijos darbo: socials, photos, cookies+FAB+TH). Logiški atskiri commits prieš push.
-- ⬜ **THB kainos = FX placeholder, ne real-world pricing** — Arisa turi patvirtinti realias TH market kainas
+- ⬜ **Vercel preview nesinkronizuotas** — 2 commits push'inti į `migrated-from-onedrive` branch, bet `arisa-gules.vercel.app` stebi `main` ir vis dar serve'ina seną state. User negali peržiūrėti šios sesijos rezultato live preview'e iki merge į main.
+- ⬜ **Browser smoke test** — tik curl HTTP 200 + grep markup atlikta. Real interaction (Silktide banner UX, FAB hover/focus, Cookie Settings click → modal flow, gtag dataLayer events) nepatikrinta.
+- ⬜ **Mobile responsive UX** — `.fab-stack` 52×52px ant <720px breakpoint'o galimai dengia Silktide bottom-center banner; cart drawer 100vw width ant mobile gali padaryti FAB nepasiekiamą (z-index 120 vs drawer 95 — DOM lygyje aktyvus, vizualiai under).
+- ⬜ **THB kainos = FX placeholder** — ne real-world pricing. Arisa turi patvirtinti realias TH market kainas (FX ×38 = bandymas, gali būti per žemai/aukštai).
 - ⬜ **GA4 measurement ID** — Arisa turi pateikti `G-XXXXXXXXXX`. Iki tol consent veikia, tracking neaktyvus.
-- ⬜ **WhatsApp + LINE smoke test live** — lokalus mock OK, bet reikia patikrinti ant production deploy (Vercel preview)
-- ⬜ **Mobile audit po FAB pridėjimo** — patikrinti, ar 52×52 FAB nesikerta su Silktide banner mobile (`bottomCenter` Silktide vs. `bottom-right` FAB — atskiras axis, OK teoriškai)
+- ⬜ **"Bangkok Craft Annual"** about.html — placeholder copy, gali būti nesamas event. Saugiau "Local Craft Fair" arba pašalinti, kol Arisa patvirtins.
+- ⬜ **LINE brand label** — oficialios LINE brand guidelines reikalauja tekstinio "LINE" label šalia logo. Dabar tik ikona (minimalistic), gali būti brand violation.
 
 ### Commits šioje sesijoje
-NĖRA — visi pakeitimai uncommitted (3 ankstesnių sesijų darbas + ši = ~17 modified failai).
+| # | Hash | Files | +/- | Žinutė |
+|---|---|---|---|---|
+| 1 | `311d8c6` | 38 | +2818 / -176 | feat: add cookie consent, FAB buttons, photos, TH locale (sesijos #3 + #4 darbas) |
+| 2 | `a99c22b` | 3 | +325 / -30 | docs: sync session #4 — consent, FAB, TH locale, completion 70% to 78% |
+
+**Push:** `489f430..a99c22b` → `origin/migrated-from-onedrive`. Branch sync'inta su GitHub. Working tree clean.
 
 ### Kitas žingsnis (priority order)
-1. **Commit'inti šios + ankstesnių sesijų darbą** — atskirti į logiškus commits: (a) social icons (sesija #3), (b) photo integration (sesija #3), (c) cookie consent + FAB (sesija #4), (d) Lithuania→Thailand + THB (sesija #4)
-2. **Email Arisai** — preview link + pateiktini assets (real product shots, GA4 ID, real THB pricing, Thai bank IBAN, founding year confirm)
-3. **Lighthouse + mobile audit** — patikrinti FAB + Silktide UX mobile, Core Web Vitals po photo integration
+1. **Vercel preview sync sprendimas** — merge'inti `migrated-from-onedrive` → `main` (per GitHub PR ar lokaliai), kad `arisa-gules.vercel.app` atnaujintų. Be to user negali peržiūrėti šios sesijos live.
+2. **Browser smoke test** po merge — Silktide banner UX, FAB hover/focus, Cookie Settings click → modal, mobile responsive. Patikrinti, ar nuotraukos load'inasi (Vercel cache + ?v=1 buster).
+3. **Email Arisai** — preview link (post-merge) + pateiktini assets: real product shots (Liora/Theo/Margot/Soren), GA4 measurement ID, real THB pricing, Thai bank account, founding year confirm 2020.
+4. **Lighthouse + mobile audit** — Core Web Vitals po photo + FAB integration. Gallery.html ~3 MB weight (virš 1.5 MB CLAUDE.md budget'o) — galimai reikia lazy loading polyfill'o background-image'iams.
 
 ---
 

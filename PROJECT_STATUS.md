@@ -1,7 +1,7 @@
 # PROJECT_STATUS.md — Arisa in WonderDolls
 
 > Live status. Atnaujinama po kiekvienos sesijos (žr. `/close-session`).
-> Last updated: 2026-05-10 (post docs-sync, naktis #4)
+> Last updated: 2026-05-10 (post close-session, naktis #4 — commits + push'inta)
 
 ## OVERALL
 
@@ -10,7 +10,7 @@
 **Production:** ⚠️ Preview live `https://arisa-gules.vercel.app/` — ne owned domain
 **Domain:** ⬜ Not registered (proposed: `arisainwonderdolls.com`)
 **Repo:** https://github.com/riko8825/Arisa
-**Branch:** `migrated-from-onedrive` (active dev), `main` (still mapped į Vercel auto-deploy)
+**Branch:** `migrated-from-onedrive` @ `a99c22b` (active dev, push'inta) — 4 commits ahead of `main`. `main` (`22f6abb`) vis dar mapped į Vercel auto-deploy → preview rodo seną state.
 **Locale:** Thailand (atelier), THB currency, EN copy. FX €→฿ ×38, kainos suapvalintos iki 500 THB.
 
 ---
