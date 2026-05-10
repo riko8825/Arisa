@@ -214,7 +214,7 @@ hr { border: none; }
   align-items: center;
   justify-content: space-between;
   gap: 24px;
-  min-height: 88px;
+  min-height: 80px;
   padding: 8px 0;
 }
 .brand {
