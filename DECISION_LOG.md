@@ -207,6 +207,138 @@
 
 ---
 
+## D-013 · 2026-05-10 · Photo integration: background-image ant `.imgph` (ne `<img>` tag)
+
+**Sprendimas:** Esamiems 48 `<div class="imgph ar-XXX">` placeholder elementams pridėtas modifier `.imgph.has-photo` su `background-image: url(...)`. Nepakeista į `<img>` tag.
+
+**Kodėl:**
+- Esama `.imgph` struktūra turi corner+label overlay'us, kurie po realių nuotraukų turi išlikti
+- `.imgph` jau turi `aspect-ratio` per ar-tall/ar-portrait/ar-square/ar-landscape — naudojam tą patį layout
+- Vienas CSS modifier (`has-photo`) leido bulk regex inject 37 placeholder'ius keturiuose failuose vienu žingsniu (vs. ~150 individualių edit'ų jei keistume struktūrą į `<img>`)
+- Background-image automatiškai `cover` + `center` — nereikia rūpintis intrinsic dimensions'ais
+
+**Trade-off:**
+- Background-image SEO weaker nei `<img alt="...">` (Google neindexuoja background images)
+- Lazy loading reikalauja CSS hack'o (vs. native `loading="lazy"` ant `<img>`)
+- Phase 2: jei reikia stiprios SEO image presence, refactor į `<img>` + Schema.org ImageObject
+
+**Kas paveikta:** `assets/css/styles.css` (+9 lines `.imgph.has-photo`), `index.html` (10 imgph), `gallery.html` (13), `shop.html` (9), `about.html` (6), `product.html` (9)
+
+---
+
+## D-014 · 2026-05-10 · Photo rotation pool (11 photos / 48 slots)
+
+**Sprendimas:** 11 nuotraukų pool'as cikliškai paskirstytas ~37 grid placeholder'iuose per regex inject scriptą. Index.html 10 placeholder'ių mapped manualiai (hero, atelier, customer quote — kontekstui priklauso).
+
+**Kodėl:**
+- Klientas turi tik 11 nuotraukų vs. 48 placeholder slots
+- Atskirti hero/atelier/quote placeholder'iai turi semantinį priskirimą (Liora hero, Mira's homecoming testimonial) — manualiai mapped
+- Gallery/grid puslapiuose semantika "Liora · sleeping" yra placeholder copy iki Arisa atsiųs realius product shots — rotation acceptable
+
+**Trade-off:**
+- Tos pačios nuotraukos pasikartoja per puslapius (pvz. `customer-girl-cafe.jpg` rodoma index.html hero + index.html collection card + gallery.html)
+- Pavadinimai grid'e (Liora, Theo, Margot, Soren) neatitinka tikro turinio (customer photos)
+- Sprendimas laikinas — pakeisti kai gausim realius product shots iš Arisa
+
+**Kas paveikta:** Photo pool defined `assets/img/{about,products,testimonials}/`, originalai `assets/img/_raw/`, 5 HTML failai
+
+---
+
+## D-015 · 2026-05-10 · Cookie consent: Silktide vendor (ne custom)
+
+**Sprendimas:** Cookie consent stack — `silktide-consent-manager.js` + `.css` (vendor, ~66 KB iš empirra-website) + custom `consent-init.js` config su 3 kategorijomis (necessary / analytics / advertising) + Google Consent Mode V2 default deny `<head>` bootstrap. Vendor failai commit'inti į `assets/silktide/` (ne CDN).
+
+**Kodėl:**
+- Empirra jau naudoja Silktide'ą — žinom, veikia, pagal GDPR
+- Custom solution (kaip empirra `cookie-banner.js` 117-eilių vanilla) nepalaiko granular per-kategorijos consent + atskirų `onAccept`/`onReject` hookų į gtag
+- Consent Mode V2 default deny + `wait_for_update: 500` — Google reikalavimas EU/EEA traffic; geriau iš karto teisingas setup nei refactor vėliau
+- 3 kategorijos (ne 2) nors Advertising dabar neaktyvus — future-proof, lengviau pridėti FB Pixel/Google Ads be schema reorganizavimo
+- GA4 ID `G-XXXXXXXXXX` placeholder užkommentuotas su TODO marker — Arisa pateiks vėliau, iki tol consent mode aktyvus, tracking neaktyvus
+
+**Trade-off:**
+- Vendor failai (~66 KB) commit'inti į repo — vendor update reikalauja manual replace iš empirra-website (jei vendor versija atsinaujins)
+- Silktide vendor pre-defined `consentTypes` schema (`label`, `defaultValue`, `onAccept`, `onReject`) — savo brand override per CSS only (`.stcm-banner`, `.stcm-modal`)
+- Cookie Settings link footer'yje per `[data-cookie-settings]` data-attr + click handler `consent-init.js` apačioje (nėra public Silktide method'o openModal, naudojam `getInstance().toggleModal(true)`)
+
+**Alternatyvos atmestos:**
+- Custom Empirra-style `cookie-banner.js` (vanilla, 1 kategorija) — nepakanka GDPR per-purpose granular consent
+- Cookiebot / CookieYes (SaaS) — kaina + cross-domain dependency
+- iubenda — overkill mažam atelier site'ui
+
+**Kas paveikta:** `assets/silktide/` (vendor, naujas), `assets/js/consent-init.js` (naujas), visi 8 HTML failai (`<head>` Consent Mode V2 + footer Silktide loader + Cookie Settings link), `privacy.html` (Cookies sekcija perrašyta — 3 kategorijų lentelė + processor lentelė), `assets/css/styles.css` (`.legal-table` + Silktide overrides)
+
+---
+
+## D-016 · 2026-05-10 · Floating contact buttons: WhatsApp + LINE (TH market)
+
+**Sprendimas:** Bottom-right `.fab-stack` su 2 floating action button'ais — WhatsApp (`+66 96 202 6660`) + LINE (`dumver18`). Inline SVG ikonos, brand spalvos (`#25D366` / `#06C755`), z-index 120 (virš toast 110, po Silktide modal). Mobile 52×52px, desktop 56×56px. Hover: `translateY(-2px) scale(1.04)` + stronger shadow + darker brand bg.
+
+**Kodėl:**
+- Tailande LINE = primary messaging app (vyrauja virš WhatsApp). WhatsApp — tarptautiniams collectoriams
+- FAB pattern jau yra empirra.com (`whatsapp-float`) — žinome, veikia, mobile-friendly
+- 2 buttons stack vertically — užtikrintas spacing, nesutampa, abu visada matomi
+- Inline SVG (vienas path per icon) — be HTTP request'ų, perfect dark/light theme compatibility (currentColor / fixed white fill)
+- `pointer-events: none` ant wrapper'io + `auto` ant `.fab` — clicks neperdengia tarp mygtukų, viskas tikslu
+- `prefers-reduced-motion` blocks transition + transform — accessibility
+
+**Trade-off:**
+- Brand spalvos žalios (abu) — vizualiai kontrastas tik per shade (#25D366 vs #06C755). Mitigation: skirtingos ikonos + aria-label
+- Z-index 120 fix'as priklauso nuo Silktide naudojantis high z-index (~2147483XXX) modal'ui — jei Silktide pakeis, reikės re-test
+- LINE brand guidelines reikalauja rodyti "LINE" tekstą šalia logo (oficialios brand rules) — neimplementuota dabar (minimalistic), gali reikėti pridėti tooltip vėliau
+
+**Alternatyvos atmestos:**
+- Tik WhatsApp (kaip empirra) — TH context reikalauja LINE
+- 1 toggle button → expand 2 — perdaug clicks user'iui
+- Bottom toolbar fixed bar — užima vertical space, konfliktuoja su mobile cart drawer
+- Tooltips on hover — desktop only, mobile užmasiruoja
+
+**Kas paveikta:** `assets/css/styles.css` (~50 lines `.fab-stack`/`.fab/--whatsapp/--line` + media queries + reduced-motion), visi 8 HTML failai (FAB block prieš `</body>`)
+
+---
+
+## D-017 · 2026-05-10 · Locale: Lithuania → Thailand pilna migracija
+
+**Sprendimas:** Visi Lithuania/Vilnius/EU/EUR/€ referencijai pakeisti į Thailand/THB context. 87 substitution'ai 14 failuose: 8 HTML + `cart.js` + `styles.css` (jokio pakeitimo, tik `?v=3` cache bump) + `products.json` + `docs/{brand,content-guidelines,seo-checklist}.md` + `PROJECT_STATUS.md`. Kainos konvertuotos €→฿ pagal FX × 38 (gegužė 2026), suapvalintos iki 500 THB.
+
+**Kodėl:**
+- Užsakovas (Arisa) yra iš Tailando, ne Lietuvos. Pirmoji setup sesija turėjo placeholder LT context (development assumption, pirminė intake forma neaiški dėl lokacijos)
+- Pilna migracija saugesnė nei dalinė — palieka 0 leftover'ių, ir vartotojui (atelier owner), ir SEO (Google nemato mixed signals "Vilnius atelier" + "Thailand based")
+- Legal copy (privacy.html VDAI → PDPC, terms.html "Republic of Lithuania" → "Kingdom of Thailand", SEPA → Thai bank transfer) — atelier registracija, jurisdikcija, tax authority — visi turi atitikti realią vietą
+- FX × 38 (€1 ≈ ฿38 gegužę 2026) — placeholder pricing, Arisa patvirtins/koreguos pagal TH market (materials, labor, shipping kainos kitokios)
+
+**Trade-off:**
+- THB kainos = FX placeholder, ne real-world pricing — Arisa turi peer'ižiūrėti ar `฿ 56,000` realistiška Liora kainai (galimai daug per žemai/aukštai pagal TH reborn doll market)
+- Brand voice charter (`docs/content-guidelines.md`) per multi-lang Phase 2 plan'ą perrašyta iš "Lithuanian, then German" į "Thai, then English-only collector market" — Phase 2 lokalizacija reikalauja Thai script puslapio
+- Sesijų istorija (SESSION_STATUS.md) NEPAKEISTA — paliekam istorinį kontekstą (ankstesnės sesijos vyko su LT placeholder'iu, faktas)
+- "European mohair" → "imported mohair" — bendroji, nes mohair tikrai importuojamas (Suri alpaca / Angora gallows) iš farms užsienyje, nepriklausomai nuo atelier vietos
+
+**Alternatyvos atmestos:**
+- Dual-locale (LT ir TH versijos) — overkill, atelier vienoje vietoje
+- Tik topbar pakeitimas — palikti rest of copy "Vilnius atelier" — mixed signals, useris explicit "kad nieko neliktu"
+- "Vilnius Craft Annual" → "Bangkok Craft Annual" placeholder — gali būti realus event, bet kontekste tik filler copy. Phase 2 — pakeisti į realų TH craft event arba pašalinti
+
+**Kas paveikta:** 16 modified failų (8 HTML + `cart.js` + `styles.css` + `products.json` + 3 docs/ + 3 tracking failai)
+
+---
+
+## D-018 · 2026-05-10 · Cart price formatting: hardcoded `฿` (ne i18n)
+
+**Sprendimas:** `cart.js` `formatPrice()` returns `'฿ ' + n.toLocaleString('en-US')`. Hardcoded simbolis, ne dinamiškas iš currency config'o.
+
+**Kodėl:**
+- Single-locale site Phase 1 — i18n stack (Intl.NumberFormat su currency options) overkill
+- Inline string replace = 1 eilutė, lengva grep'inti jei reikės keisti
+- `toLocaleString('en-US')` palieka thousand separator commas (`฿ 56,000`) — atitinka site'o EN locale (tai ne THB native format `฿56,000.00`, bet užtikrina visual consistency)
+- Phase 2 (jei multi-currency / multi-locale) — pakeisti į `Intl.NumberFormat('en-US', { style: 'currency', currency: 'THB' })` arba locale-aware
+
+**Trade-off:**
+- Numeric `data-product` JSON payload (`"price":56000`) — tai jau "raw integer THB". Jei Arisa sutiks Phase 2 turėti €/฿ toggle, reikės pridėti `"currency"` field per produktą + dynamic format'inimą
+- `?v=2` cache bump ant cart.js — visi vartotojai atsisiųs naują versiją; senas cart state localStorage'e su senais EUR price values (1480) gali būti misleading (rodys ฿ 1,480 vietoj ฿ 56,000). Mitigation: localStorage key versioning (`arisa_cart_v1`) leidžia pridėti `_v2` jei norėsim force-clear
+
+**Kas paveikta:** `assets/js/cart.js` (1 eilutė), `cart.js?v=2` cache buster visuose 8 puslapiuose, 10 `data-product` JSON payload'ų atnaujinti su numeric THB price
+
+---
+
 ## Template naujam įrašui
 
 ```

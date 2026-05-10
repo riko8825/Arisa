@@ -145,9 +145,151 @@ Pirmoji setup sesija. Klientas (Arisa) atsiuntė intake form 2026-05-10. Repo tu
 
 ---
 
+## Sesija 2026-05-10 (naktis): Social icons + photo integration
+
+**Self-score:** 7/10 · **Pabaigtumas:** ~70% (svetainės content layer)
+
+### Kontekstas
+Po folder migration sesijos. Klientas atsiuntė 3 wetransfer ZIP'us su nuotraukomis (logo, studio, customer photos, lifestyle shots). Reikėjo: pakeisti footerio social placeholders į realias nuorodas (TikTok + Facebook + Instagram), išskleisti ZIP'us, optimizuoti fotos ir integruoti į svetainę. Lokalizacija (EN/TH) aptarta, bet neimplementuota.
+
+### Atlikta
+
+**1. Social icons (visi 8 puslapiai):**
+- `assets/css/styles.css`: `.social-icons` klasė (44×44px round, hover blush+lift) + contact-card variantas (48×48px ant šviesaus bg)
+- Inline SVG ikonos: Instagram (outline), TikTok (filled), Facebook (filled) — be external dependencies
+- Realios nuorodos: `instagram.com/arisa_in_wonderdolls`, `tiktok.com/@arisareborndollnersury`, `facebook.com/share/1AxGdXgPge/`
+- Pašalinta visi `<a href="#">Instagram</a><a href="#">Pinterest</a>` placeholder'iai
+- `target="_blank" rel="noopener noreferrer"` + `aria-label`
+
+**2. Photo extraction & organization:**
+- 3 ZIP'ai iš `Downloads`: `wetransfer_att-jpeg`, `wetransfer_my-studio-and-logo`, `wetransfer_customer-feedback-picture`
+- 11 nuotraukų išskleistos ir suklasifikuotos:
+  - `assets/img/_raw/logo-transparent.png` (456 KB) — archyvas (logo NEKEITĖM per userio sprendimą)
+  - `assets/img/about/studio.jpg` (231 KB, originalas 2.1 MB PNG)
+  - `assets/img/products/` — 3 doll/lifestyle (carrier, matcha-cafe, toddler-studio)
+  - `assets/img/testimonials/` — 6 customer photos (mother-daughter, arisa-with-girl, girl-cafe/car/garden, mom-beach)
+
+**3. Image optimization (System.Drawing PowerShell):**
+- Resize logic: max width 1200-1600px pagal kategoriją, JPEG quality 80-85
+- `customer-mother-daughter.jpg`: 4.3 MB → 142 KB (-96.7%)
+- `studio.png` (2.1 MB) → `studio.jpg` (231 KB, -89%)
+- 5 nuotraukos kur naujas dydis viršijo originalą → restored iš `_raw/`
+- Originalai išsaugoti `_raw/` (~9.7 MB)
+
+**4. HTML integration (48 imgph blocks across 5 files):**
+- `assets/css/styles.css`: pridėta `.imgph.has-photo` modifier (background-image + cover, slepia gradient overlay'ą, label/corner išlieka)
+- `index.html`: 11 imgph (hero, 4 product cards, atelier, customer quote, 3 collection cards) — manualiai mapped
+- `gallery.html` (13), `shop.html` (9), `about.html` (6), `product.html` (9) — bulk regex inject su rotation per 10 photo pool
+- Cache-buster `?v=1` ant visų bg-image references
+
+**5. Photo rotation fix:**
+- `customer-mother-daughter.jpg` rotated 90° counter-clockwise (RotateFlipType.Rotate270FlipNone)
+- Cache bump `?v=1` → `?v=2` index.html + gallery.html
+
+### Commits šioje sesijoje
+NĖRA — visi pakeitimai uncommitted, 9 modified files + 4 new img dirs. Reikia commit'inti prieš deploy.
+
+### Kas liko / nepatvirtinta
+
+- ⬜ **Lokalizacija EN/TH** — userio prašymas paliktas neužbaigtas. Aptarta plana, neimplementuota (i18n turinio extraction reikalauja atskiros sesijos)
+- ⬜ **Photo asignacijų korektūra** — `customer-girl-cafe.jpg` (mergaitė kavinėje su lėle) priskirta hero kaip "Liora, sleeping" — tekstas neatitinka turinio. Reikia review: ar tai customer photo, ar product photo?
+- ⬜ **Per-page weight verification** — gallery.html turi 13 nuotraukų ≈ 3 MB → galimai virš 1.5 MB CLAUDE.md budget'o. Reikia Lighthouse run.
+- ⬜ **Mobile responsive check** — naujos nuotraukos (background-image) gali turėti positioning issues mažuose ekranuose
+- ⬜ **Commit + push** — 9 modified files dar neicommit'inta. Reikia atskiro commit'o socials + atskiro photos
+- ⬜ **WebP conversion** — System.Drawing ne palaiko WebP. Galima būtų 30% mažesni failai per `cwebp` (tools install reikalingas)
+- ⬜ Rotation cache bump padarytas tik 1 nuotraukai (`customer-mother-daughter.jpg ?v=2`), kitos 10 liko `?v=1` — jei ateityje keisi rotaciją, reiks rankinio bump'inimo
+
+### Atviri klausimai klientui (Arisa)
+
+1. ⬜ Ar užkliūna nuotraukos asignacijos? (Pvz. customer photo'ai naudoti kaip "product hero")
+2. ⬜ Lokalizacija — pilnas EN/TH ar tik dropdown UI placeholder?
+3. ⬜ Kitos nuotraukos su tikrų doll product shots?
+
+### Kitas žingsnis (priority order)
+
+1. **Commit'inti dabartinius pakeitimus** — 2 atskiri commits: (a) socialiniai tinklai 8 failuose + CSS, (b) photo integration + rotation
+2. **Lokalizacija EN/TH** — naujoje sesijoje. Reikia pasirinkti scope (tik UI dropdown vs. pilnas vertimas vs. atskiri /th/ puslapiai)
+3. **Photo asignacijų review** — peržiūrėti, ar product card pavadinimai atitinka realias nuotraukas (Liora, Theo, Margot, Soren — fictional names su customer photos)
+4. **Lighthouse + mobile audit** — per-page weight, CLS, LCP po nuotraukų pridėjimo
+
+---
+
+## Sesija 2026-05-10 (naktis #4): Cookie consent + floating FAB + LT→TH migracija
+
+**Self-score:** 8/10 · **Pabaigtumas:** ~78%
+
+### Kontekstas
+Po naktinės photo integration sesijos (uncommitted). Userio užklausos: (1) sukurti cookies setup'ą perimant viską iš empirra-website, (2) pridėti floating WhatsApp + LINE buttons (TH numeris `+66 96 202 6660`, LINE ID `dumver18`), (3) pakeisti Lithuania → Thailand visur, EUR → THB (užsakovas iš Tailando).
+
+### Atlikta
+
+**1. Cookie consent system (Silktide + Consent Mode V2):**
+- Vendor failai nukopijuoti iš empirra-website: `assets/silktide/silktide-consent-manager.js` (54 KB) + `silktide-consent-manager.css` (12 KB)
+- Naujas `assets/js/consent-init.js` — Arisa-tonal config (warm copy "the nursery is being visited"), 3 kategorijos (necessary / analytics / advertising), gtag mapping, footer Cookie Settings click handler per `getInstance().toggleModal(true)`
+- Visi 8 puslapiai gavo `<head>` Consent Mode V2 default deny + GA4 placeholder `G-XXXXXXXXXX` (užkommentuotas, su TODO replace marker)
+- Visi 8 puslapiai gavo Silktide loader prieš `main.js` (preload CSS + 2 script defer)
+- "Cookie Settings" link footer'yje šalia Privacy/Terms (visi 8 puslapiai)
+- `privacy.html` Cookies sekcija perrašyta — 3 kategorijų lentelė + processor lentelė (Silktide UK, Google USA, Vercel USA, Stripe USA)
+- `styles.css` papildyta `.legal-table` styling + Silktide brand override (Inter + ink/gold linkai)
+
+**2. Floating contact buttons (WhatsApp + LINE):**
+- `.fab-stack` CSS — bottom-right fixed, 56×56px (52×52 mobile), z-index 120 (virš toast/100, po Silktide modal)
+- WhatsApp `#25D366` + LINE `#06C755` brand colors, oficialios SVG ikonos (inline, vienas path per icon)
+- Hover: `translateY(-2px) scale(1.04)` + stronger shadow + darker brand bg
+- Focus-visible dvigubas ring (porcelain → ink) klaviatūrai
+- `pointer-events: none` ant wrapper'io + `auto` ant `.fab` — clicks neperdengia tarp mygtukų
+- `prefers-reduced-motion` blocks transition + transform
+- HTML inject visuose 8 puslapiuose prieš `</body>`
+
+**3. Lithuania → Thailand pilna migracija (87 substitution'ų 14 failuose):**
+- Topbar `Atelier · Lithuania` / `EUR · EN` → `Atelier · Thailand` / `THB · EN`
+- Visos kainos € → ฿, FX × 38, suapvalintos iki 500 THB:
+  - Anouk ฿54k, Liora ฿56k, Wren ฿57.5k, Margot ฿58.5k, Elin ฿60k, Soren ฿61.5k, Theo ฿64k
+  - contact.html ranges: ฿45.5k–57k / ฿57k–68.5k / ฿68.5k–95k
+- `cart.js` — `formatPrice()` `'€ '` → `'฿ '`; cart `?v=2` cache buster
+- 10 `data-product` JSON payload'ų atnaujinti su numeric THB price
+- Schema.org: `priceCurrency: EUR` → `THB`, `priceRange: €€€` → `฿฿฿`, `addressCountry: EU` → `TH`, numeric prices recalc'ed
+- `products.json` `currency: EUR` → `THB`
+- Legal copy:
+  - **privacy.html** — "Vilnius, Lithuania" → "based in Thailand", "EU accounting law" → "Thai accounting law", "Lithuanian tax authority" → "Thai tax authority", **VDAI → Thai PDPC under PDPA**
+  - **terms.html** — "Republic of Lithuania" / "courts of Vilnius" → "Kingdom of Thailand" / "courts of Thailand", **SEPA → Thai bank transfer**, "Arisa Vaitkevičiūtė" → "Arisa", liability/governing law klauzulės perrašytos
+  - **about.html** — "apartment studio in Vilnius" → "studio in Thailand", "Vilnius Craft Annual" → "Bangkok Craft Annual", "European mohair" → "imported mohair"
+  - **contact.html** — "Vilnius (LT)" → "Thailand", "ship outside the EU" → "ship outside Thailand", FAQ shipping copy
+  - footer'iai (visi 8) "Handmade in the EU" → "Handmade in Thailand"
+- `docs/content-guidelines.md` + `docs/seo-checklist.md` + `docs/brand.md` (`ATELIER · LITHUANIA` → `ATELIER · THAILAND`) — sync'inta
+- Cache: `styles.css?v=2 → ?v=3` (visi 8 pages)
+
+**4. Docs sync:**
+- `PROJECT_STATUS.md` — Phase 75% → 80%, OVERALL pridėtas Locale skyrius, ASSETS lentelė papildyta Silktide vendor + consent-init.js + bumped `?v=3`/`?v=2`, AUTOMATIONS gavo #6 Cookie consent + #7 Floating contact (47% bendras pabaigtumas), PAGES lentelė gavo Consent + FAB stulpelius, KNOWN ISSUES papildyta 3 nauji punktai (THB FX placeholder, GA4 ID placeholder, Silktide vendor update), NEXT SPRINT prioritetas perrikiuotas
+- `docs/brand.md` — ATELIER mono label TH
+
+### Verifikacija
+- Lokalus `python http.server 8765` — visi 8 puslapiai grąžina FAB markup, Silktide assets 200, `Atelier · Thailand` + `THB · EN` topbar
+- Audit grep `Lithuania|Vilnius|Lietuv|VDAI|European|EUR\b|€` per visą projektą = **0 matches**
+- CSS turi 18 `fab-stack` referencijų + Silktide override blokai
+
+### Kas liko / nepatvirtinta
+- ⬜ **Visa sesija uncommitted** — 16 modified + 6 untracked (3 sesijos darbo: socials, photos, cookies+FAB+TH). Logiški atskiri commits prieš push.
+- ⬜ **THB kainos = FX placeholder, ne real-world pricing** — Arisa turi patvirtinti realias TH market kainas
+- ⬜ **GA4 measurement ID** — Arisa turi pateikti `G-XXXXXXXXXX`. Iki tol consent veikia, tracking neaktyvus.
+- ⬜ **WhatsApp + LINE smoke test live** — lokalus mock OK, bet reikia patikrinti ant production deploy (Vercel preview)
+- ⬜ **Mobile audit po FAB pridėjimo** — patikrinti, ar 52×52 FAB nesikerta su Silktide banner mobile (`bottomCenter` Silktide vs. `bottom-right` FAB — atskiras axis, OK teoriškai)
+
+### Commits šioje sesijoje
+NĖRA — visi pakeitimai uncommitted (3 ankstesnių sesijų darbas + ši = ~17 modified failai).
+
+### Kitas žingsnis (priority order)
+1. **Commit'inti šios + ankstesnių sesijų darbą** — atskirti į logiškus commits: (a) social icons (sesija #3), (b) photo integration (sesija #3), (c) cookie consent + FAB (sesija #4), (d) Lithuania→Thailand + THB (sesija #4)
+2. **Email Arisai** — preview link + pateiktini assets (real product shots, GA4 ID, real THB pricing, Thai bank IBAN, founding year confirm)
+3. **Lighthouse + mobile audit** — patikrinti FAB + Silktide UX mobile, Core Web Vitals po photo integration
+
+---
+
 ## Istorija
 
 | Data | Score | Pabaig. | Pagrindinis darbas |
 |---|---|---|---|
 | 2026-05-10 (rytas/vakaras) | 7/10 | 22% | Foundation: CSS/JS, agency docs, logo integration, image trim cache fix |
 | 2026-05-10 (vėlyvas vakaras) | 8/10 | 22% | Token discipline (CLAUDE.md -64%, settings allowlist) + folder migration į OneDrive |
+| 2026-05-10 (naktis) | 7/10 | ~70% | Social icons (TikTok+FB+IG, 8 files) + photo integration (11 photos optimized, 48 imgph blocks filled) |
+| 2026-05-10 (naktis #4) | 8/10 | ~78% | Cookie consent (Silktide + Consent Mode V2, 3 kategorijos) + floating WhatsApp/LINE FAB + Lithuania→Thailand pilna migracija (87 subs, EUR→THB ×38) |
