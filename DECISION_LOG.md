@@ -144,6 +144,29 @@
 
 ---
 
+## D-010 · 2026-05-10 · Asset cache-bust per `?v=N` query string
+
+**Sprendimas:** Visi `assets/img/*` references HTML'e — su `?v=N` query string. Kai paimsim image → bumpinam N (`?v=2`, `?v=3`, ...).
+
+**Kodėl:**
+- Vercel `vercel.json` agresyviai cache'ina `assets/*` su `Cache-Control: public, max-age=31536000, immutable` (1 metai)
+- Be cache-bust, bet koks image edit nepasiekia user'io kol jo browser tikras paspaus hard reload
+- Per logo iteraciją (sesijos commit `a7d0cd9`) — user nematė pakeitimų net po 4 atskirų deploy'ų
+- `?v=N` = pigiausia, vanilla, jokio build step
+
+**Trade-off:**
+- Manual disciplina — kiekvienas image edit reikalauja N bumpinti rankomis HTML'e
+- N versioning sukasi forever — Phase 2 galima pakeisti į content-hash (`?v=abc123`) jei prisidėtų build step
+
+**Alternatyvos atmestos:**
+- Sumažinti `max-age` iki valandų — pakenktų performance metrics, image užkraunamas pakartotinai
+- Filename hashing (`logo.abc123.jpg`) — reikia build step
+- Service Worker cache invalidation — over-engineering vanilla site'ui
+
+**Kas paveikta:** visi 8 HTML failai (`?v=2` ant logo refs), `vercel.json` (paliktas — cache rule reikalingas)
+
+---
+
 ## Template naujam įrašui
 
 ```
