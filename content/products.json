@@ -1,95 +1,189 @@
 {
-  "$schema": "Master list of dolls. Single source of truth. Update this, then sync HTML manually (or via future build step).",
+  "$schema": "Master list of dolls in the atelier. Single source of truth. Update this, then sync HTML manually.",
   "currency": "THB",
+  "fxNote": "Prices reference EUR equivalents around 1100-1700, converted to THB at ~38/EUR and rounded to the nearest 500.",
   "dolls": [
     {
-      "id": "liora",
-      "name": "Liora",
-      "slug": "liora-sleeping-newborn",
+      "id": "pickle",
+      "name": "Pickle",
+      "slug": "pickle-sleeping-newborn",
+      "type": "newborn",
+      "state": "sleeping",
+      "sizeIn": 19,
+      "weightLb": 4.4,
+      "price": 56500,
+      "status": "available",
+      "tag": "flagship",
+      "tone": "warm",
+      "shortDescription": "Sleeping newborn with painted dark hair and a quiet, full-cheeked face.",
+      "story": "Pickle was painted across two slow weeks, layer by layer, with long pauses to let the colour settle. The hair is hand-painted in fine flowing strokes; the body is full vinyl, weighted to feel newly arrived. She has been photographed in a bear suit, a heart-print tutu, and a soft knit bunny bonnet — each look a small reminder that she is meant to be lived with, not displayed.",
+      "specs": {
+        "kit": "Pickle by Bonnie Brown",
+        "paint": "Genesis heat-set, 24 layers",
+        "hair": "Hand-painted, layered",
+        "eyes": "German glass, closed",
+        "body": "Full vinyl, weighted with glass beads",
+        "shipping": "Insured worldwide, linen-lined cradle box"
+      },
+      "images": [
+        "assets/img/products/pickle/portrait-arms-up.jpg",
+        "assets/img/products/pickle/lifestyle-bear-suit.jpg",
+        "assets/img/products/pickle/dressed-heart-tutu.jpg",
+        "assets/img/products/pickle/bunny-bonnet.jpg",
+        "assets/img/products/pickle/diaper-showcase.jpg",
+        "assets/img/products/pickle/top-of-head-painted-hair.jpg",
+        "assets/img/products/pickle/detail-hand.jpg"
+      ]
+    },
+    {
+      "id": "luisa",
+      "name": "Luisa",
+      "slug": "luisa-rooted-newborn",
       "type": "newborn",
       "state": "sleeping",
       "sizeIn": 19,
       "weightLb": 4.2,
-      "price": 1480,
+      "price": 60000,
       "status": "available",
-      "tag": "new",
       "tone": "warm",
-      "shortDescription": "Sleeping newborn, weighted to feel newly arrived.",
-      "story": "Liora was painted across nine evenings in early spring, layer by layer, between long pauses to let her settle. Her cheeks hold the faintest blush of waking, though she has not woken yet.",
+      "shortDescription": "Hand-rooted newborn with full dark hair and a calm, finished face.",
+      "story": "Luisa is the rooted sister of the painted-hair newborns. Each strand of her hair was placed by hand over many quiet evenings — a slow practice that asks for stillness more than skill. She arrives in the atelier's signed packaging, ready to be unwrapped.",
       "specs": {
-        "kit": "Limited-edition vinyl, signed and numbered",
-        "paint": "Genesis heat-set, 28 layers",
+        "kit": "Luisa by Olga Auer",
+        "paint": "Genesis heat-set",
         "hair": "Imported mohair, micro-rooted by hand",
         "eyes": "German glass, closed",
         "body": "Soft cotton cloth, weighted with glass beads",
         "shipping": "Insured worldwide, linen-lined cradle box"
       },
       "images": [
-        "assets/img/products/liora-1.webp",
-        "assets/img/products/liora-2.webp",
-        "assets/img/products/liora-3.webp"
+        "assets/img/products/luisa/finished-pacifier-bear.jpg",
+        "assets/img/products/luisa/finished-side.jpg",
+        "assets/img/products/luisa/detail-face-closeup.jpg",
+        "assets/img/products/luisa/branded-packaging.jpg",
+        "assets/img/products/luisa/wip-rooted-head-front.jpg",
+        "assets/img/products/luisa/wip-rooted-head-top.jpg"
       ]
     },
     {
-      "id": "theo",
-      "name": "Theo",
-      "slug": "theo-awake-toddler",
+      "id": "elf-fee",
+      "name": "Elf Fee",
+      "slug": "elf-fee-fantasy-newborn",
+      "type": "newborn",
+      "state": "awake",
+      "sizeIn": 19,
+      "weightLb": 4.0,
+      "price": 64000,
+      "status": "available",
+      "tag": "fantasy",
+      "tone": "cream",
+      "shortDescription": "A sculpted-ear fantasy newborn with platinum curls and a quiet, watchful gaze.",
+      "story": "Elf Fee is a fantasy reborn — sculpted with delicate elfin ears and given a head of platinum mohair curls. She watches more than she sleeps. The atelier dresses her with a small grey bunny so she is not alone.",
+      "specs": {
+        "kit": "Elf Fee fantasy sculpt",
+        "paint": "Genesis heat-set, fantasy palette",
+        "hair": "Imported mohair, hand-rooted, soft platinum curls",
+        "eyes": "German glass, open soft grey",
+        "body": "Soft cotton, weighted",
+        "shipping": "Insured worldwide, linen-lined cradle box"
+      },
+      "images": [
+        "assets/img/products/elf-fee/portrait-with-bunny.jpg",
+        "assets/img/products/elf-fee/lifestyle-bunny-blanket.jpg",
+        "assets/img/products/elf-fee/detail-elf-ear.jpg"
+      ]
+    },
+    {
+      "id": "meadow",
+      "name": "Meadow",
+      "slug": "meadow-toddler-ginger",
+      "type": "toddler",
+      "state": "awake",
+      "sizeIn": 22,
+      "weightLb": 5.8,
+      "price": 64500,
+      "status": "available",
+      "tone": "warm",
+      "shortDescription": "Awake ginger-haired toddler with painted lashes and a long, quiet stare.",
+      "story": "Meadow is a poseable toddler with a painted ginger head and clear blue glass eyes. The atelier photographed her in a high chair with a small painted horse — the kind of unhurried play she was made for.",
+      "specs": {
+        "kit": "Meadow toddler sculpt",
+        "paint": "Genesis heat-set, 22 layers",
+        "hair": "Hand-painted, ginger",
+        "eyes": "German glass, open blue",
+        "body": "Soft cotton, weighted, poseable toddler frame",
+        "shipping": "Insured worldwide, linen-lined cradle box"
+      },
+      "images": [
+        "assets/img/products/meadow/portrait-gray-blanket.jpg",
+        "assets/img/products/meadow/highchair-with-horse.jpg",
+        "assets/img/products/meadow/highchair-reaching.jpg",
+        "assets/img/products/meadow/holding-toy-horse.jpg"
+      ]
+    },
+    {
+      "id": "demi",
+      "name": "Demi",
+      "slug": "demi-vinyl-newborn",
+      "type": "newborn",
+      "state": "sleeping",
+      "sizeIn": 18,
+      "weightLb": 4.6,
+      "price": 53500,
+      "status": "available",
+      "tone": "cream",
+      "shortDescription": "Sleeping full-vinyl newborn with painted hair and a peaceful, settled face.",
+      "story": "Demi is a full-vinyl newborn — bath-safe, weighted, with hand-painted hair laid down in fine flowing layers. She has been photographed beside a bottle and in soft cotton, the way the atelier imagines she will be held at home.",
+      "specs": {
+        "kit": "Demi full-vinyl body",
+        "paint": "Genesis heat-set",
+        "hair": "Hand-painted",
+        "eyes": "German glass, closed",
+        "body": "Full vinyl, weighted, bath-safe",
+        "shipping": "Insured worldwide, linen-lined cradle box"
+      },
+      "images": [
+        "assets/img/products/demi/portrait-sleeping.jpg",
+        "assets/img/products/demi/full-body-front.jpg",
+        "assets/img/products/demi/full-body-side.jpg",
+        "assets/img/products/demi/with-bottle.jpg",
+        "assets/img/products/demi/back-of-head.jpg"
+      ]
+    },
+    {
+      "id": "sue-sue",
+      "name": "Sue Sue",
+      "slug": "sue-sue-toddler-rooted",
       "type": "toddler",
       "state": "awake",
       "sizeIn": 21,
-      "weightLb": 5.6,
-      "price": 1690,
-      "status": "available",
-      "tone": "blue",
-      "shortDescription": "Awake toddler with painted hair and curious eyes.",
-      "story": "",
-      "specs": {
-        "kit": "",
-        "paint": "Genesis heat-set",
-        "hair": "Painted, layered",
-        "eyes": "German glass, open hazel",
-        "body": "Soft cotton, weighted",
-        "shipping": "Insured worldwide"
-      },
-      "images": []
-    },
-    {
-      "id": "margot",
-      "name": "Margot",
-      "slug": "margot-drowsy-newborn",
-      "type": "newborn",
-      "state": "drowsy",
-      "sizeIn": 18,
-      "weightLb": 3.8,
-      "price": 1540,
+      "weightLb": 5.4,
+      "price": 62000,
       "status": "reserved",
       "tag": "reserved",
-      "tone": "cream",
-      "shortDescription": "Drowsy newborn with mohair and milky-soft skin.",
-      "story": "",
-      "specs": {},
-      "images": []
-    },
-    {
-      "id": "soren",
-      "name": "Soren",
-      "slug": "soren-awake-newborn",
-      "type": "newborn",
-      "state": "awake",
-      "sizeIn": 20,
-      "weightLb": 4.6,
-      "price": 1620,
-      "status": "available",
       "tone": "warm",
-      "shortDescription": "Awake newborn with glass eyes that seem to think.",
-      "story": "",
-      "specs": {},
-      "images": []
+      "shortDescription": "Awake toddler with rooted auburn hair and a thoughtful expression.",
+      "story": "Sue Sue is photographed both before and after — bald in early sittings, then with a head of auburn mohair rooted strand by strand. She has the quiet, slightly serious face of a child who is taking the room in.",
+      "specs": {
+        "kit": "Sue Sue toddler sculpt",
+        "paint": "Genesis heat-set, 26 layers",
+        "hair": "Imported mohair, micro-rooted by hand, auburn",
+        "eyes": "German glass, open warm brown",
+        "body": "Soft cotton, weighted, poseable toddler frame",
+        "shipping": "Insured worldwide, linen-lined cradle box"
+      },
+      "images": [
+        "assets/img/products/sue-sue/finished-auburn.jpg",
+        "assets/img/products/sue-sue/dressed-pink-hearts.jpg",
+        "assets/img/products/sue-sue/detail-leg-skin.jpg",
+        "assets/img/products/sue-sue/wip-bald-unfinished.jpg"
+      ]
     }
   ],
   "categories": {
     "newborns": "Soft, sleeping or drowsy, weighted to feel newly arrived.",
     "toddlers": "Older children, painted or rooted hair, more poseable.",
+    "fantasy": "Sculpted-ear and fantasy reborns, made for storytelling.",
     "bespoke": "A reborn made from your reference photographs."
   }
 }
