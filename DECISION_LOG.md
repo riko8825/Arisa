@@ -167,6 +167,46 @@
 
 ---
 
+## D-011 · 2026-05-10 · Token discipline: trim CLAUDE.md + safe-command allowlist
+
+**Sprendimas:** CLAUDE.md sutrumpintas 245 → 88 eilučių (-64%), perkeliant detales į `docs/`. Pridėtas `.claude/settings.local.json` su safe Bash command allowlist (git status/diff/log/add/commit/push, curl, sed loops, python, mkdir, cp).
+
+**Kodėl:**
+- CLAUDE.md perskaitomas kiekvienos sesijos pradžioje — kiekviena eilutė kainuoja kiekvienai sesijai forever
+- Sesijos token'ų analizė parodė ~25k token'ų sušvaistyta dėl: 4 logo iteracijų, HTML edits per Edit tool (vietoj sed), perteklinai summary'ių, permission prompts spam'o
+- `.claude/settings.local.json` sumažina ~200 tokens per kiekvieną permission prompt × ~20-30 prompts/sesija = ~5k tokens
+
+**Trade-off:**
+- Sutrumpinant CLAUDE.md, kai kuriais atvejais reikės follow-up Read'o į `docs/` failą (jei užduotis liečia tą sluoksnį) — kompromisas vertas
+- Settings allowlist turi atnaujinti, kai prisidedu naujų safe commands
+
+**Kas paveikta:** `CLAUDE.md`, `.claude/settings.local.json` (naujas), `~/.claude/projects/c--Users-pinig-Arisa/memory/feedback.md` (papildytas su 5 token discipline rules)
+
+---
+
+## D-012 · 2026-05-10 · Repo folder migration į `OneDrive\Stalinis kompiuteris\Arisa`
+
+**Sprendimas:** Aktyvus projekto folderis perkeliamas iš `c:\Users\pinig\Arisa` į `c:\Users\pinig\OneDrive\Stalinis kompiuteris\Arisa` (kur user'is laiko kitus projektus — Veriva, Empirra, etc.). Naujam folderiui inicializuotas šviežias git repo, prijungtas prie `riko8825/Arisa`. Push'inta į **branch `migrated-from-onedrive`**, NE main — kad nebreak Vercel deploy'o.
+
+**Kodėl:**
+- Visi kiti user'io projektai gyvena `OneDrive\Stalinis kompiuteris\` — vienoje vietoje, OneDrive sync, vienoje IDE workspace folder
+- `c:\Users\pinig\Arisa` buvo izoliuotas — sunkiau organizuoti
+- Branch'as vietoj force push į main — saugu (sena istorija nepraranda, Vercel nesugriūna)
+
+**Trade-off:**
+- Du paraleliai veikiantys git lokai (senas + naujas) — divergence rizika kol user'is nepriims merge sprendimo
+- Senas `~/.claude/projects/c--Users-pinig-Arisa/memory/` paliktas — outdated path info viduje
+- Vercel deploy nesinkronizuotas — kol nesumerge'inta į main, `arisa-gules.vercel.app` rodo seną state
+
+**Alternatyvos atmestos:**
+- Force push į `main` — destruktyvu, nutrauktų 8-commit istoriją GitHub'e
+- Symbolic link nuo seno path į naują — Windows specific, nesaugu, painu Claude'ui
+- Palikti senąjį folderį pagrindiniu — neištrauktų user'io iš multi-projektinio organizavimo
+
+**Kas paveikta:** Visa repo struktūra (41 failai), git remote, GitHub branch'ai, memory katalogas (duplikuotas į naują projekto-id)
+
+---
+
 ## Template naujam įrašui
 
 ```

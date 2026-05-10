@@ -100,8 +100,54 @@ Pirmoji setup sesija. Klientas (Arisa) atsiuntė intake form 2026-05-10. Repo tu
 
 ---
 
+---
+
+## Sesija 2026-05-10 (vėlyvas vakaras): Token discipline + folder migration
+
+**Self-score:** 8/10 · **Pabaigtumas:** 22% (be naujų automation modulių)
+
+### Atlikta
+
+**Token discipline (commit `22f6abb` senajame repo):**
+- Identifikuoti sesijos token švaistymo šaltiniai (~25k tokens)
+- CLAUDE.md sutrumpintas 245 → 88 eilučių (-64%)
+- `.claude/settings.local.json` su safe Bash allowlist (~200 tokens/prompt sutaupyta)
+- `memory/feedback.md` papildytas 5 token discipline rules
+
+**Folder migration:**
+- Naujas aktyvus folderis: `c:\Users\pinig\OneDrive\Stalinis kompiuteris\Arisa\`
+- Senas `c:\Users\pinig\Arisa\` paliktas kaip backup (su pilna git istorija iki `22f6abb`)
+- Naujas git repo inicializuotas `main` branch'e, prijungtas prie `riko8825/Arisa`
+- `.gitignore` papildytas `.claude/scheduled_tasks.lock`
+- Push'inta į **branch `migrated-from-onedrive`** (commit `57e32a9`, 41 files, 4935 insertions) — NE main, kad nepaveiktų live deploy
+- Memory failai duplikuoti į `~/.claude/projects/c--Users-pinig-OneDrive-Stalinis-kompiuteris-Arisa/memory/`
+- `project_arisa.md` + `reference.md` atnaujinti su nauju path
+
+### Kas liko / nepatvirtinta
+
+- ⬜ **Merge sprendimas:** `migrated-from-onedrive` → `main` GitHub'e — lemia, kuris repo'as kontroliuoja Vercel deploy
+- ⬜ Vercel auto-deploy vis dar stebi senojo repo `main` — `arisa-gules.vercel.app` rodo `22f6abb`, ne naują migration commit'ą
+- ⬜ Senas folderis `c:\Users\pinig\Arisa\` neištrintas, ne uždraustas push'inti — divergence rizika jei atsidarys per klaidą
+- ⬜ Senas memory katalogas (`c--Users-pinig-Arisa`) paliktas — outdated path info viduje, gali sukelti confusion
+- ⬜ `uploads/CLAUDE-arisa-in-wonderdolls-reborn-nursery.md` (intake form originalas) — commit'intas viešai į GitHub. Reikia paklausti Arisa, ar OK.
+
+### Kitas žingsnis (priority order)
+
+1. **Pasirinkti repo'o autoritetą:** dirbi iš naujo OneDrive folderio (→ merge'inti `migrated-from-onedrive` į `main`) ar grįžti į senąjį (→ uždaryti naują branch). Sprendimas lemia visą tolimesnę workflow.
+2. **Vercel project ownership patvirtinimas** — kas valdo `arisa-gules.vercel.app`. Jei perimsi, pakeisti deploy source.
+3. **`api/lead-capture.ts` integracija** — wire į `contact.html`, Vercel env vars (RESEND_API_KEY, LEAD_CAPTURE_SECRET), smoke test su realiu submit.
+
+### Commits šioje sesijoje
+| # | Hash | Repo | Branch | Trumpinys |
+|---|---|---|---|---|
+| 1 | `22f6abb` | senas (`c:\Users\pinig\Arisa`) | main | Token discipline: trim CLAUDE.md, add safe-command allowlist |
+| 2 | `57e32a9` | naujas (OneDrive) | migrated-from-onedrive | Migrate to OneDrive folder (root commit, 41 files) |
+
+---
+
 ## Istorija
 
 | Data | Score | Pabaig. | Pagrindinis darbas |
 |---|---|---|---|
-| 2026-05-10 | 7/10 | 22% | Foundation: CSS/JS, agency docs, logo integration, image trim cache fix |
+| 2026-05-10 (rytas/vakaras) | 7/10 | 22% | Foundation: CSS/JS, agency docs, logo integration, image trim cache fix |
+| 2026-05-10 (vėlyvas vakaras) | 8/10 | 22% | Token discipline (CLAUDE.md -64%, settings allowlist) + folder migration į OneDrive |

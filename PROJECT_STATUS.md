@@ -96,7 +96,8 @@
 | Step | Status |
 |---|---|
 | GitHub repo | ✅ Connected (`riko8825/Arisa`) |
-| Vercel project linked | ⚠️ Auto-deploy live į `arisa-gules.vercel.app` — ownership unclear, reikia patvirtinti |
+| Repo location | ⚠️ Migration in progress — naujas folderis `OneDrive\Stalinis kompiuteris\Arisa` (branch `migrated-from-onedrive`, commit `57e32a9`). Senas `c:\Users\pinig\Arisa` paliktas backup'ui (`main`, `22f6abb`). Reikia merge sprendimo. |
+| Vercel project linked | ⚠️ Auto-deploy live į `arisa-gules.vercel.app` (stebi `main` — t.y. dar seną state). Ownership unclear. |
 | Domain registered | ⬜ TODO (`arisainwonderdolls.com`) |
 | DNS configured | ⬜ TODO |
 | `.env` configured Vercel'yje | ⬜ TODO (RESEND_API_KEY, LEAD_CAPTURE_SECRET) |
